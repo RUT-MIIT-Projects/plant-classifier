@@ -1,4 +1,4 @@
-# Neural networks
+# Neural network
 Нейронная сеть, которая ....
 
 ## Цели проекта
