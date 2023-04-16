@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (requestCode) {
             //gallery
-            case PICK_FROM_GALLERY:
+            case PICK_FROM_GALLERY -> {
                 Uri selectedImage = data.getData();
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -93,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 bitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
-                break;
+            }
 
             //camera
-            case GET_FROM_CAMERA:
+            case GET_FROM_CAMERA -> {
                 bitmap = (Bitmap) data.getExtras().get("data");
                 imageView.setImageBitmap(bitmap);
                 bitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
-                break;
+            }
 
         }
     }
