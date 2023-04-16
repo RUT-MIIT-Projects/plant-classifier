@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -63,9 +64,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         predictBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                // TODO: add image classifier
+                setContentView(R.layout.activity_main);
+                TextView resultOut = (TextView)findViewById(R.id.resultOut);
+                resultOut.setText("Result: " );  // TODO: add result
 
             }
         });
