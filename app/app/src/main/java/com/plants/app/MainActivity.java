@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     TextView resultOut;
     Bitmap bitmap;
-    int imageSize = 100;
+    final static int IMAGE_SIZE = 100;
     private static final int PICK_FROM_GALLERY = 1;
     private static final int GET_FROM_CAMERA = 2;
     private static final int GALLERY_REQUEST_CODE = 100;
@@ -67,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.activity_main);
                 TextView resultOut = (TextView)findViewById(R.id.resultOut);
-                resultOut.setText("Result: " );  // TODO: add result
 
+                String result = ImageClassifier.classifyImage(bitmap, getApplicationContext());
+
+                resultOut.setText("Result: " + result);  // add result
             }
         });
     }
@@ -110,14 +111,14 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                bitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
+                bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
             }
 
             //camera
             case GET_FROM_CAMERA -> {
                 bitmap = (Bitmap) data.getExtras().get("data");
                 imageView.setImageBitmap(bitmap);
-                bitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
+                bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
             }
 
         }
