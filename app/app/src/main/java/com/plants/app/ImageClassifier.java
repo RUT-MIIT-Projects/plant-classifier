@@ -13,6 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class ImageClassifier {
+    static String[] plants = {"Echinocactus", "Mimosa", "Monstera", "Orchid", "Rose"};
 
     public static String classifyImage(Bitmap bitmap, Context context) {
         int imageSize = MainActivity.IMAGE_SIZE;
@@ -59,12 +60,11 @@ public class ImageClassifier {
                     maxPos = i;
                 }
             }
-            String[] classes = {"Echinocactus", "Mimosa", "Monstera", "Orchid", "Rose"};
 
             // Releases model resources if no longer used.
             model.close();
 
-            return classes[maxPos];
+            return plants[maxPos];
 
         } catch (IOException e) {
             // TODO Handle the exception
