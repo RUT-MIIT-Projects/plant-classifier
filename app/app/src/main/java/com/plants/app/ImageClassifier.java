@@ -59,7 +59,7 @@ public class ImageClassifier {
                     maxPos = i;
                 }
             }
-            String[] classes = {}; //TODO: class name
+            String[] classes = {"Echinocactus", "Mimosa", "Monstera", "Orchid", "Rose"};
 
             // Releases model resources if no longer used.
             model.close();
