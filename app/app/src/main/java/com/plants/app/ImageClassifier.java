@@ -2,6 +2,7 @@ package com.plants.app;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.plants.app.ml.Model1;
 
@@ -67,7 +68,7 @@ public class ImageClassifier {
             return plants[maxPos];
 
         } catch (IOException e) {
-            // TODO Handle the exception
+            Log.e("ImageClassifier", "Import error",e);
         }
         return "UNKNOWN! UNEXPECTED ERROR! XXX";
     }

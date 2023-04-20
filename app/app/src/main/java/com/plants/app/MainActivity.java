@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -69,9 +70,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 TextView resultOut = (TextView)findViewById(R.id.resultOut);
 
-                String result = ImageClassifier.classifyImage(bitmap, getApplicationContext());
+                if (bitmap != null) {
+                    String result = ImageClassifier.classifyImage(bitmap, getApplicationContext());
 
-                resultOut.setText("Result: " + result);  // add result
+                    resultOut.setText("Result: " + result);
+                }
+                else Toast.makeText(getApplicationContext(), "Изображение не выбрано",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -101,25 +105,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            //gallery
-            case PICK_FROM_GALLERY:
-                Uri selectedImage = data.getData();
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                    imageView.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
-            break;
+        if(resultCode == RESULT_OK){
+            switch (requestCode) {
+                //gallery
+                case PICK_FROM_GALLERY:
+                    Uri selectedImage = data.getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
-            //camera
-            case GET_FROM_CAMERA:
-                bitmap = (Bitmap) data.getExtras().get("data");
-                imageView.setImageBitmap(bitmap);
-                bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
-            break;
+                //camera
+                case GET_FROM_CAMERA:
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                    break;
+            }
+            imageView.setImageBitmap(bitmap);
+            bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
 
         }
     }
