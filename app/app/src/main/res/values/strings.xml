@@ -4,5 +4,5 @@
     <string name="galleryBtn">Launch Gallery</string>
     <string name="captureBtn">Take Picture</string>
     <string name="predictBtn">Predict</string>
-    <string name="resultOut">Result: </string>
+    <string name="resultOut">"Result: "</string>
 </resources>
