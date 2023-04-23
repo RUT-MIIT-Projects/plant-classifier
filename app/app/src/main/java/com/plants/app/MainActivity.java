@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.plants.app.adapters.ImageClassifier;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     TextView resultOut;
     Bitmap bitmap;
-    final static int IMAGE_SIZE = 100;
+    public final static int IMAGE_SIZE = 100;
     private static final int PICK_FROM_GALLERY = 1;
     private static final int GET_FROM_CAMERA = 2;
     private static final int GALLERY_REQUEST_CODE = 100;

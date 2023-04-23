@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">app</string>
+    <string name="app_name">Floria</string>
     <string name="title">Plant Classifier</string>
     <string name="galleryBtn">Launch Gallery</string>
     <string name="captureBtn">Take Picture</string>
