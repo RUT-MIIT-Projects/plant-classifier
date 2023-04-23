@@ -1,9 +1,10 @@
-package com.plants.app;
+package com.plants.app.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.plants.app.MainActivity;
 import com.plants.app.ml.Model1;
 
 import org.tensorflow.lite.DataType;

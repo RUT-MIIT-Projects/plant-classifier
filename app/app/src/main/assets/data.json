@@ -1,0 +1,49 @@
+{
+    "plants":[
+        {
+            "name": "Кактус",
+            "watering": "",
+            "insolation": "",
+            "pruning": "",
+            "soil": "",
+            "pot_size": "",
+            "picture": ""
+        },
+        {
+            "name": "Мимоза",
+            "watering": "",
+            "insolation": "",
+            "pruning": "",
+            "soil": "",
+            "pot_size": "",
+            "picture": ""
+        },
+        {
+            "name": "Монстера",
+            "watering": "",
+            "insolation": "",
+            "pruning": "",
+            "soil": "",
+            "pot_size": "",
+            "picture": ""
+        },
+        {
+            "name": "Орхидея",
+            "watering": "",
+            "insolation": "",
+            "pruning": "",
+            "soil": "",
+            "pot_size": "",
+            "picture": ""
+        },
+        {
+            "name": "Роза",
+            "watering": "",
+            "insolation": "",
+            "pruning": "",
+            "soil": "",
+            "pot_size": "",
+            "picture": ""
+        }
+    ]
+}
