@@ -18,6 +18,7 @@ public class JSONHelper {
 
         try(FileInputStream fileInputStream = context.openFileInput(FILE_NAME);
             InputStreamReader streamReader = new InputStreamReader(fileInputStream)){
+            //InputStreamReader to Convert byte streams to character streams
 
             Root root = gson.fromJson(streamReader, Root.class);
 
