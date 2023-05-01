@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -21,14 +24,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.plants.app.adapters.ImageClassifier;
+import com.plants.app.databinding.ActivityMainBinding;
+import com.plants.app.fragments.ArticlesFragment;
+import com.plants.app.fragments.HomeFragment;
+import com.plants.app.fragments.ProfileFragment;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button galleryBth, captureBtn, predictBtn;
+    ActivityMainBinding binding;
+    Button galleryBth, captureBtn;
     ImageView imageView;
-    TextView resultOut;
     Bitmap bitmap;
     public final static int IMAGE_SIZE = 100;
     private static final int PICK_FROM_GALLERY = 1;
@@ -40,46 +47,69 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment());
+
+        binding.bottomNavigationMenu.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.homeFragment:
+                    replaceFragment(new HomeFragment());
+                    break;
+                case R.id.articlesFragment:
+                    replaceFragment(new ArticlesFragment());
+                    break;
+                case R.id.profileFragment:
+                    replaceFragment(new ProfileFragment());
+                    break;
+            }
+            return true;
+        });
 
         getPermission();
 
-        galleryBth = findViewById(R.id.galleryBtn);
-        captureBtn = findViewById(R.id.captureBtn);
-        predictBtn = findViewById(R.id.predictBtn);
-        resultOut = findViewById(R.id.resultOut);
-        imageView = findViewById(R.id.imageView);
+//        galleryBth = findViewById(R.id.galleryBtn);
+//        captureBtn = findViewById(R.id.captureBtn);
+//        imageView = findViewById(R.id.imageView);
 
-        galleryBth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
-            }
-        });
+//        galleryBth.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+//            }
+//        });
+//
+//        captureBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(cameraIntent, GET_FROM_CAMERA);
+//            }
+//        });
+//
+//        predictBtn.setOnClickListener(new View.OnClickListener() {
+//            @SuppressLint("SetTextI18n")
+//            @Override
+//            public void onClick(View view) {
+//                TextView resultOut = (TextView)findViewById(R.id.resultOut);
+//
+//                if (bitmap != null) {
+//                    String result = ImageClassifier.classifyImage(bitmap, getApplicationContext());
+//
+//                    resultOut.setText("Result: " + result);
+//                }
+//                else Toast.makeText(getApplicationContext(), "Изображение не выбрано",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+    }
 
-        captureBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, GET_FROM_CAMERA);
-            }
-        });
+    private void replaceFragment(Fragment fragment){
 
-        predictBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                TextView resultOut = (TextView)findViewById(R.id.resultOut);
-
-                if (bitmap != null) {
-                    String result = ImageClassifier.classifyImage(bitmap, getApplicationContext());
-
-                    resultOut.setText("Result: " + result);
-                }
-                else Toast.makeText(getApplicationContext(), "Изображение не выбрано",Toast.LENGTH_SHORT).show();
-            }
-        });
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+        fragmentTransaction.commit();
     }
 
     void getPermission(){
@@ -93,40 +123,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_REQUEST_CODE || requestCode == GALLERY_REQUEST_CODE){
-            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                this.getPermission();
-            }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
-            switch (requestCode) {
-                //gallery
-                case PICK_FROM_GALLERY:
-                    Uri selectedImage = data.getData();
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-
-                //camera
-                case GET_FROM_CAMERA:
-                    bitmap = (Bitmap) data.getExtras().get("data");
-                    break;
-            }
-            imageView.setImageBitmap(bitmap);
-            bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
-
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == CAMERA_REQUEST_CODE || requestCode == GALLERY_REQUEST_CODE){
+//            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
+//                this.getPermission();
+//            }
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if(resultCode == RESULT_OK){
+//            switch (requestCode) {
+//                //gallery
+//                case PICK_FROM_GALLERY:
+//                    Uri selectedImage = data.getData();
+//                    try {
+//                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//
+//                //camera
+//                case GET_FROM_CAMERA:
+//                    bitmap = (Bitmap) data.getExtras().get("data");
+//                    break;
+//            }
+//            imageView.setImageBitmap(bitmap);
+//            bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
+//
+//        }
+//    }
 }
