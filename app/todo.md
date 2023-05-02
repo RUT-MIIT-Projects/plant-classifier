@@ -1,6 +1,6 @@
 # TODO:
 
-- NavController (bottom navigation bar)
+
 - Фрагмент со статьёй
 - Обработка кнопок со статьями
 - Обработка кнопок галерея/камера (binding)

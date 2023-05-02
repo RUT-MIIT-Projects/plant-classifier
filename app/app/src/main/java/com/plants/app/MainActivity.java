@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment HOME_FRAGMENT = new HomeFragment();
     ArticlesFragment ARTICLES_FRAGMENT = new ArticlesFragment();
     ProfileFragment PROFILE_FRAGMENT = new ProfileFragment();
+
     Button galleryBth, captureBtn;
     ImageView imageView;
     Bitmap bitmap;
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment){
+        //TODO: getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment).commit();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
