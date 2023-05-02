@@ -8,11 +8,12 @@
 
     <ImageButton
         android:id="@+id/echinocactus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="368dp"
+        android:layout_height="110dp"
         android:backgroundTintMode="@color/transparent"
-        android:src="@drawable/echinocactus"
-        android:layout_marginTop="65dp"
+        android:src="@drawable/echinocactus_btn"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,21 +21,22 @@
 
     <ImageButton
         android:id="@+id/mimosa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/mimosa"
+        android:layout_width="368dp"
+        android:layout_height="110dp"
+        android:src="@drawable/mimosa_btn"
+        android:scaleType="centerCrop"
         android:backgroundTintMode="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/echinocactus"
         app:layout_constraintBottom_toTopOf="@id/monstera"/>
 
-
     <ImageButton
         android:id="@+id/monstera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/monstera"
+        android:layout_width="368dp"
+        android:layout_height="110dp"
+        android:src="@drawable/monstera_btn"
+        android:scaleType="centerCrop"
         android:backgroundTintMode="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,21 +45,22 @@
 
     <ImageButton
         android:id="@+id/orchid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/orchid"
+        android:layout_width="368dp"
+        android:layout_height="110dp"
+        android:src="@drawable/orchid_btn"
+        android:scaleType="centerCrop"
         android:backgroundTintMode="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/monstera"
         app:layout_constraintBottom_toTopOf="@id/rose"/>
 
-
     <ImageButton
         android:id="@+id/rose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/rose"
+        android:layout_width="368dp"
+        android:layout_height="110dp"
+        android:src="@drawable/rose_btn"
+        android:scaleType="centerCrop"
         android:backgroundTintMode="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

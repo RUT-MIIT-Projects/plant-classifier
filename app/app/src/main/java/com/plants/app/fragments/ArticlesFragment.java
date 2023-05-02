@@ -12,7 +12,6 @@ import com.plants.app.R;
 
 public class ArticlesFragment extends Fragment {
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

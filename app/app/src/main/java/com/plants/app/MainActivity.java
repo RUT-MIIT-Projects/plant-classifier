@@ -34,6 +34,9 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    HomeFragment HOME_FRAGMENT = new HomeFragment();
+    ArticlesFragment ARTICLES_FRAGMENT = new ArticlesFragment();
+    ProfileFragment PROFILE_FRAGMENT = new ProfileFragment();
     Button galleryBth, captureBtn;
     ImageView imageView;
     Bitmap bitmap;
@@ -49,18 +52,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        replaceFragment(HOME_FRAGMENT);
 
-        binding.bottomNavigationMenu.setOnItemSelectedListener(item -> {
+        binding.bottomNavigationBar.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.homeFragment:
-                    replaceFragment(new HomeFragment());
+                    replaceFragment(HOME_FRAGMENT);
                     break;
                 case R.id.articlesFragment:
-                    replaceFragment(new ArticlesFragment());
+                    replaceFragment(ARTICLES_FRAGMENT);
                     break;
                 case R.id.profileFragment:
-                    replaceFragment(new ProfileFragment());
+                    replaceFragment(PROFILE_FRAGMENT);
                     break;
             }
             return true;
