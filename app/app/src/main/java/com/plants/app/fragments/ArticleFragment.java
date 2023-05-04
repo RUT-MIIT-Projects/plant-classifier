@@ -9,13 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.plants.app.R;
+import com.plants.app.databinding.FragmentArticleBinding;
+import com.plants.app.databinding.FragmentHomeBinding;
 
 public class ArticleFragment extends Fragment {
+    FragmentArticleBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_article, container, false);
+        binding = FragmentArticleBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }

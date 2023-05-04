@@ -7,6 +7,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -23,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.databinding.ActivityMainBinding;
 import com.plants.app.fragments.ArticlesFragment;
@@ -34,9 +39,9 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    HomeFragment HOME_FRAGMENT = new HomeFragment();
-    ArticlesFragment ARTICLES_FRAGMENT = new ArticlesFragment();
-    ProfileFragment PROFILE_FRAGMENT = new ProfileFragment();
+    public HomeFragment HOME_FRAGMENT = new HomeFragment();
+    public ArticlesFragment ARTICLES_FRAGMENT = new ArticlesFragment();
+    public ProfileFragment PROFILE_FRAGMENT = new ProfileFragment();
 
     Button galleryBth, captureBtn;
     ImageView imageView;
@@ -53,44 +58,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(HOME_FRAGMENT);
 
-        binding.bottomNavigationBar.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.homeFragment:
-                    replaceFragment(HOME_FRAGMENT);
-                    break;
-                case R.id.articlesFragment:
-                    replaceFragment(ARTICLES_FRAGMENT);
-                    break;
-                case R.id.profileFragment:
-                    replaceFragment(PROFILE_FRAGMENT);
-                    break;
-            }
-            return true;
-        });
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragmentContainerView);
+        NavController navController = navHostFragment.getNavController();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationBar);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         getPermission();
 
-//        galleryBth = findViewById(R.id.galleryBtn);
-//        captureBtn = findViewById(R.id.captureBtn);
-//        imageView = findViewById(R.id.imageView);
-
-//        galleryBth.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
-//            }
-//        });
-//
-//        captureBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(cameraIntent, GET_FROM_CAMERA);
-//            }
-//        });
 //
 //        predictBtn.setOnClickListener(new View.OnClickListener() {
 //            @SuppressLint("SetTextI18n")
@@ -128,15 +104,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == CAMERA_REQUEST_CODE || requestCode == GALLERY_REQUEST_CODE){
-//            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
-//                this.getPermission();
-//            }
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_REQUEST_CODE || requestCode == GALLERY_REQUEST_CODE){
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                this.getPermission();
+            }
+        }
+    }
 //
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
