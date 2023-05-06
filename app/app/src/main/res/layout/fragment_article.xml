@@ -1,11 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ArticleFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/Article">
 
+        <ImageView
+            android:id="@+id/plant"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/name"/>
 
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="24sp"
+            android:text="@string/Orchid"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" 
+            app:layout_constraintTop_toBottomOf="@id/plant"
+            app:layout_constraintBottom_toTopOf="@id/Watering"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Watering -->
+        <TextView
+            android:id="@+id/Watering"
+            style="@style/ArticleTextTitle"
+            android:text="@string/Watering"
+            app:layout_constraintStart_toStartOf="@id/Watering_info"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintBottom_toTopOf="@id/Watering_info"/>
+
+        <TextView
+            android:id="@+id/Watering_info"
+            style="@style/ArticleText"
+            android:text="@string/Watering_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Watering"
+            app:layout_constraintBottom_toTopOf="@id/Insolation"/>
+
+        <!-- Insolation -->
+        <TextView
+            android:id="@+id/Insolation"
+            style="@style/ArticleTextTitle"
+            android:text="@string/Insolation"
+            app:layout_constraintStart_toStartOf="@id/Insolation_info"
+            app:layout_constraintTop_toBottomOf="@id/Watering_info"
+            app:layout_constraintBottom_toTopOf="@id/Insolation_info"/>
+
+        <TextView
+            android:id="@+id/Insolation_info"
+            style="@style/ArticleText"
+            android:text="@string/Watering_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Insolation"
+            app:layout_constraintBottom_toTopOf="@id/Pruning"/>
+
+        <!-- Pruning -->
+        <TextView
+            android:id="@+id/Pruning"
+            style="@style/ArticleTextTitle"
+            android:text="@string/Pruning"
+            app:layout_constraintStart_toStartOf="@id/Pruning_info"
+            app:layout_constraintTop_toBottomOf="@id/Insolation_info"
+            app:layout_constraintBottom_toTopOf="@id/Pruning_info"/>
+
+        <TextView
+            android:id="@+id/Pruning_info"
+            style="@style/ArticleText"
+            android:text="@string/Pruning_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Pruning"
+            app:layout_constraintBottom_toTopOf="@id/Soil"/>
+
+        <!-- Soil -->
+        <TextView
+            android:id="@+id/Soil"
+            style="@style/ArticleTextTitle"
+            android:text="@string/Soil"
+            app:layout_constraintStart_toStartOf="@id/Soil_info"
+            app:layout_constraintTop_toBottomOf="@id/Pruning_info"
+            app:layout_constraintBottom_toTopOf="@id/Soil_info"/>
+
+        <TextView
+            android:id="@+id/Soil_info"
+            style="@style/ArticleText"
+            android:text="@string/Soil_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Soil"
+            app:layout_constraintBottom_toTopOf="@id/Pot_size"/>
+
+        <!-- Soil -->
+        <TextView
+            android:id="@+id/Pot_size"
+            style="@style/ArticleTextTitle"
+            android:text="@string/Pot_size"
+            app:layout_constraintStart_toStartOf="@id/Pot_size_info"
+            app:layout_constraintTop_toBottomOf="@id/Soil_info"
+            app:layout_constraintBottom_toTopOf="@id/Pot_size_info"/>
+
+        <TextView
+            android:id="@+id/Pot_size_info"
+            style="@style/ArticleText"
+            android:text="@string/Pot_size_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Pot_size" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
