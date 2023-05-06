@@ -5,8 +5,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -16,8 +16,8 @@ public class JSONHelper {
     public static ArrayList<Plant> importFromJson(Context context){
         Gson gson = new Gson();
 
-        try(FileInputStream fileInputStream = context.openFileInput(FILE_NAME);
-            InputStreamReader streamReader = new InputStreamReader(fileInputStream)){
+        try(InputStream inputStream = context.getAssets().open(FILE_NAME);
+            InputStreamReader streamReader = new InputStreamReader(inputStream)){
             //InputStreamReader to Convert byte streams to character streams
 
             Root root = gson.fromJson(streamReader, Root.class);
