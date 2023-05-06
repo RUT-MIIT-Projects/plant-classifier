@@ -11,6 +11,8 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_start);
 
         new Handler().postDelayed(new Runnable() {

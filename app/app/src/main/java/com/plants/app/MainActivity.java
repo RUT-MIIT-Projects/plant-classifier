@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
@@ -39,12 +40,6 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    public HomeFragment HOME_FRAGMENT = new HomeFragment();
-    public ArticlesFragment ARTICLES_FRAGMENT = new ArticlesFragment();
-    public ProfileFragment PROFILE_FRAGMENT = new ProfileFragment();
-
-    Button galleryBth, captureBtn;
-    ImageView imageView;
     Bitmap bitmap;
     public final static int IMAGE_SIZE = 100;
     private static final int PICK_FROM_GALLERY = 1;
@@ -65,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationBar);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.articlesFragment, R.id.profileFragment).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         getPermission();
 
 //
