@@ -38,7 +38,7 @@ import com.plants.app.fragments.ProfileFragment;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-
+    private NavController navController;
     ActivityMainBinding binding;
     Bitmap bitmap;
     public final static int IMAGE_SIZE = 100;
@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.fragmentContainerView);
-        NavController navController = navHostFragment.getNavController();
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+        navController = navHostFragment.getNavController();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationBar);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.articlesFragment, R.id.profileFragment).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
         getPermission();
 
 //
@@ -81,13 +81,9 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-    private void replaceFragment(Fragment fragment){
-        //TODO: getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, fragment).commit();
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
-        fragmentTransaction.commit();
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
     void getPermission(){
