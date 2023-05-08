@@ -1,5 +1,6 @@
 package com.plants.app.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.plants.app.adapters.ImportImage;
 import com.plants.app.adapters.parser.Plant;
 import com.plants.app.databinding.FragmentArticleBinding;
 
@@ -35,6 +37,9 @@ public class ArticleFragment extends Fragment {
             binding.PruningInfo.setText(plant.getPruning());
             binding.SoilInfo.setText(plant.getSoil());
             binding.PotSizeInfo.setText(plant.getPot_size());
+
+            Drawable drawable = ImportImage.importImage(getContext(),plant.getPicture());
+            binding.imagePlant.setImageDrawable(drawable);
         }
         else Log.e("ArticleFragment", "Argument not found");
     }
