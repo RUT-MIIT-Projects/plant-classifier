@@ -30,44 +30,44 @@ public class ArticlesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = new Bundle();
 
         binding.echinocactus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putParcelable("Plant", importPlant("Кактус",getContext()));
-                Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
+                broadcast("Кактус", view, getContext());
             }
         });
         binding.mimosa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putParcelable("Plant", importPlant("Мимоза",getContext()));
-                Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
+                broadcast("Мимоза", view, getContext());
             }
         });
         binding.monstera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putParcelable("Plant", importPlant("Монстера",getContext()));
-                Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
+                broadcast("Монстера", view, getContext());
             }
         });
         binding.orchid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putParcelable("Plant", importPlant("Орхидея",getContext()));
-                Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
+                broadcast("Орхидея", view, getContext());
             }
         });
         binding.rose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putParcelable("Plant", importPlant("Роза",getContext()));
-                Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
+                broadcast("Роза", view, getContext());
             }
         });
 
+    }
+
+    public static void broadcast(String namePlant, View view, Context context){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Plant", importPlant(namePlant,context));
+        Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
     }
 
     public static Plant importPlant(String name, Context context){

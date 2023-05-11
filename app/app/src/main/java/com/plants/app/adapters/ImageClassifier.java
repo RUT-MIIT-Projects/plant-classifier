@@ -15,10 +15,12 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class ImageClassifier {
-    static String[] plants = {"Echinocactus", "Mimosa", "Monstera", "Orchid", "Rose"};
+    static String[] plants = {"Кактус", "Мимоза", "Монстера", "Орхидея", "Роза"};
+    public static int IMAGE_SIZE = 100;
 
     public static String classifyImage(Bitmap bitmap, Context context) {
-        int imageSize = MainActivity.IMAGE_SIZE;
+        int imageSize = IMAGE_SIZE;
+        bitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
 
         try {
             Model1 model = Model1.newInstance(context);
@@ -71,6 +73,6 @@ public class ImageClassifier {
         } catch (IOException e) {
             Log.e("ImageClassifier", "Import error",e);
         }
-        return "UNKNOWN! UNEXPECTED ERROR! XXX";
+        return null;
     }
 }

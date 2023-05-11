@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 
 import com.plants.app.R;
+import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.databinding.CustomDialogDoneBinding;
 import com.plants.app.databinding.CustomDialogFailedBinding;
 import com.plants.app.databinding.FragmentHomeBinding;
@@ -90,7 +92,9 @@ public class HomeFragment extends Fragment {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Bundle bundle = result.getData().getExtras();
                         bitmap = (Bitmap) bundle.get("data");
+                        result();
                     }
+                    else if (result.getData() == null) Toast.makeText(getContext(), "Изображение не сделано",Toast.LENGTH_LONG).show();
                 }
             }
     );
@@ -105,19 +109,30 @@ public class HomeFragment extends Fragment {
                         Uri selectedImage = result.getData().getData();
                         try {
                             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                            result();
                         } catch (IOException e) {
                             Log.e("HomeFragment.startGallery", "Failed to import image from gallery");
                         }
                     }
+                    else if (result.getData() == null) Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
                 }
             });
 
-    private void showDialog(String command){
+    private void result(){
+        if (bitmap != null) {
+            String result = ImageClassifier.classifyImage(bitmap, getContext());
+            if (result != null) showDialog("DONE", result);
+            else showDialog("FAILED", "None");
+        }
+    }
+
+    private void showDialog(String command, String result){
         Dialog dialog = new Dialog(getContext());
 
         if (command.equals("DONE")) {
             dialog.setContentView(R.layout.custom_dialog_done);
             CustomDialogDoneBinding bindingDone = CustomDialogDoneBinding.bind(dialog.findViewById(R.id.dialog));
+            bindingDone.result.setText(result);
             bindingDone.close.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -128,6 +143,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     dialog.cancel();
+                    broadcast(result, getView(),getContext());
                 }
             });
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -146,9 +162,13 @@ public class HomeFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         }
-        else Log.e("showDialog","Error command");
+        else Log.e("showDialog","Command error");
+    }
 
-
+    public static void broadcast(String namePlant, View view, Context context){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Plant", ArticlesFragment.importPlant(namePlant,context));
+        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment,bundle);
     }
 
 }
