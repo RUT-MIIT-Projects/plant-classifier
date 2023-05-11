@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
                 if (isGranted){
                     checkCameraPermission(getContext());
                 }
-                else Toast.makeText(getContext(),"We need your mermission",Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getContext(),"Need your permission",Toast.LENGTH_SHORT).show();
             });
 
     ActivityResultLauncher<Intent> startCamera = registerForActivityResult(
