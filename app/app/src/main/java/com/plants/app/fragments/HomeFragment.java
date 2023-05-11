@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
                         bitmap = (Bitmap) bundle.get("data");
                         result();
                     }
-                    else if (result.getData() == null) Toast.makeText(getContext(), "Изображение не сделано",Toast.LENGTH_LONG).show();
+                    else Toast.makeText(getContext(), "Изображение не сделано",Toast.LENGTH_LONG).show();
                 }
             }
     );
@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
                             Log.e("HomeFragment.startGallery", "Failed to import image from gallery");
                         }
                     }
-                    else if (result.getData() == null) Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
+                    else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -170,5 +170,4 @@ public class HomeFragment extends Fragment {
         bundle.putParcelable("Plant", ArticlesFragment.importPlant(namePlant,context));
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment,bundle);
     }
-
 }
