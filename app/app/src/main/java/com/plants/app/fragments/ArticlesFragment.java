@@ -18,7 +18,7 @@ import com.plants.app.adapters.parser.Plant;
 import com.plants.app.databinding.FragmentArticlesBinding;
 
 public class ArticlesFragment extends Fragment {
-    FragmentArticlesBinding binding;
+    private FragmentArticlesBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

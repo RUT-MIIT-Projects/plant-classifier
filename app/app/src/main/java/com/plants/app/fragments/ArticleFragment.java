@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,12 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.plants.app.MainActivity;
 import com.plants.app.adapters.ImportImage;
 import com.plants.app.adapters.parser.Plant;
 import com.plants.app.databinding.FragmentArticleBinding;
 
 public class ArticleFragment extends Fragment {
-    FragmentArticleBinding binding;
+    private FragmentArticleBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +33,7 @@ public class ArticleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             Plant plant = getArguments().getParcelable("Plant");
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(plant.getName());
             binding.name.setText(plant.getName());
             binding.WateringInfo.setText(plant.getWatering());
             binding.InsolationInfo.setText(plant.getInsolation());

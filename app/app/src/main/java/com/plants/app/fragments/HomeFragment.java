@@ -52,7 +52,65 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkCameraPermission(getContext());
+            }
+
+        });
+        binding.gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
+            }
+        });
     }
+
+    private void checkCameraPermission(Context context){
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+            startCamera.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE));
+        }
+        else requestPermissionLauncher.launch(Manifest.permission.CAMERA);
+    }
+
+    ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted){
+                    checkCameraPermission(getContext());
+                }
+                else Toast.makeText(getContext(),"We need your mermission",Toast.LENGTH_SHORT).show();
+            });
+
+    ActivityResultLauncher<Intent> startCamera = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap = (Bitmap) bundle.get("data");
+                    }
+                }
+            }
+    );
+
+    //TODO: refactoring
+    ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri selectedImage = result.getData().getData();
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                        } catch (IOException e) {
+                            Log.e("HomeFragment.startGallery", "Failed to import image from gallery");
+                        }
+                    }
+                }
+            });
 
     private void showDialog(String command){
         Dialog dialog = new Dialog(getContext());

@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.plants.app.fragments.ArticleFragment"
-        android:label="@string/Orchid"
+        android:label=""
         tools:layout="@layout/fragment_article" >
         <action
             android:id="@+id/action_articleFragment_to_articlesFragment"
