@@ -13,7 +13,6 @@
     <string name="captureBtn">Камера</string>
 
     <!-- Fragment Home -->
-    <string name="welcome">"Привет !"</string>
     <string name="aboutApp">"Это приложение поможет правильно ухаживать за твоими растениями.\n\nДля этого нужно загрузить фотографию одним из следующих способов:"</string>
 
     <!-- Example Plant -->
