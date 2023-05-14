@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.plants.app.R;
-import com.plants.app.adapters.parser.JSONHelper;
-import com.plants.app.adapters.parser.Plant;
+import com.plants.app.adapters.JSONHelper;
+import com.plants.app.adapters.plants.Plant;
 import com.plants.app.databinding.FragmentArticlesBinding;
 
 public class ArticlesFragment extends Fragment {
@@ -72,7 +72,7 @@ public class ArticlesFragment extends Fragment {
 
     public static Plant importPlant(String name, Context context){
 
-        for (Plant plant : JSONHelper.importFromJson(context)){
+        for (Plant plant : JSONHelper.importJsonPlants(context)){
             if (plant.getName().equals(name)) return plant;
         }
         return null;

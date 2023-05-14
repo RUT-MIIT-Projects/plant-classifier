@@ -2,6 +2,7 @@ package com.plants.app.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -25,7 +26,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.plants.app.R;
+import com.plants.app.adapters.JSONHelper;
 import com.plants.app.adapters.ReadAndWrite;
+import com.plants.app.adapters.user.User;
 import com.plants.app.databinding.FragmentProfileBinding;
 
 import java.io.IOException;
@@ -49,7 +52,8 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.editUsername.setVisibility(View.INVISIBLE);
         avatar = binding.userImage.findViewById(R.id.userImage);
-        if (ReadAndWrite.loadAvatar(getContext()) != null ) avatar.setImageBitmap(ReadAndWrite.loadAvatar(getContext()));
+        handlerAvatar(getContext());
+        User user = handlerUser(getContext());
 
         binding.upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,9 +73,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER){
-                    binding.username.setText(binding.editUsername.getText().toString());
+                    String newUsername = binding.editUsername.getText().toString();
+                    binding.username.setText(newUsername);
                     binding.editUsername.setVisibility(View.INVISIBLE);
                     binding.username.setVisibility(View.VISIBLE);
+                    user.setUsername(newUsername);
+                    JSONHelper.saveJsonUser(getContext(),user);
                     return true;
 
                 }
@@ -97,4 +104,27 @@ public class ProfileFragment extends Fragment {
                     else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
                 }
             });
+
+    private void handlerAvatar(Context context) {
+        if (ReadAndWrite.loadAvatar(context) != null)
+            avatar.setImageBitmap(ReadAndWrite.loadAvatar(getContext()));
+    }
+
+    private User handlerUser(Context context){
+        User user;
+        if (JSONHelper.importJsonUser(context) == null) {
+            user = new User("username");
+            JSONHelper.saveJsonUser(context, user);
+        }
+        else user = JSONHelper.importJsonUser(context);
+
+        binding.username.setText(String.valueOf(user.getUsername()));
+        binding.countEchinocactus.setText(String.valueOf(user.getCountEchinocactus()));
+        binding.countMimosa.setText(String.valueOf(user.getCountMimosa()));
+        binding.countMonstera.setText(String.valueOf(user.getCountMonstera()));
+        binding.countOrchid.setText(String.valueOf(user.getCountOrchid()));
+        binding.countRose.setText(String.valueOf(user.getCountRose()));
+
+        return user;
+    }
 }

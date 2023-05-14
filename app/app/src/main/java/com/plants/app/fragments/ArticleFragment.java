@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.plants.app.adapters.ReadAndWrite;
-import com.plants.app.adapters.parser.Plant;
+import com.plants.app.adapters.plants.Plant;
 import com.plants.app.databinding.FragmentArticleBinding;
 
 public class ArticleFragment extends Fragment {

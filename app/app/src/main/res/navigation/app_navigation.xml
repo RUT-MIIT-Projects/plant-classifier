@@ -38,6 +38,6 @@
             app:destination="@id/articlesFragment" />
         <argument
             android:name="Plant"
-            app:argType="com.plants.app.adapters.parser.Plant" />
+            app:argType="com.plants.app.adapters.plants.Plant" />
     </fragment>
 </navigation>

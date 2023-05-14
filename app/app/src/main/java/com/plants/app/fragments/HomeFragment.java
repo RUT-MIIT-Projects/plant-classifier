@@ -33,6 +33,8 @@ import android.widget.Toast;
 
 import com.plants.app.R;
 import com.plants.app.adapters.ImageClassifier;
+import com.plants.app.adapters.JSONHelper;
+import com.plants.app.adapters.user.User;
 import com.plants.app.databinding.CustomDialogDoneBinding;
 import com.plants.app.databinding.CustomDialogFailedBinding;
 import com.plants.app.databinding.FragmentHomeBinding;
@@ -41,7 +43,7 @@ import java.io.IOException;
 
 
 public class HomeFragment extends Fragment {
-    private FragmentHomeBinding binding;
+    public FragmentHomeBinding binding;
     public Bitmap bitmap;
 
     @Override
@@ -99,7 +101,6 @@ public class HomeFragment extends Fragment {
             }
     );
 
-    //TODO: refactoring
     ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -120,10 +121,41 @@ public class HomeFragment extends Fragment {
 
     private void result(){
         if (bitmap != null) {
-            String result = ImageClassifier.classifyImage(bitmap, getContext());
-            if (result != null) showDialog("DONE", result);
+            Integer code = ImageClassifier.classifyImage(bitmap, getContext());
+            String result = ImageClassifier.getPlants()[code];
+            if (result != null) {
+                saveResult(getContext(), code);
+                showDialog("DONE", result);
+            }
             else showDialog("FAILED", "None");
         }
+    }
+    private void saveResult(Context context, Integer code){
+        User user;
+        if (JSONHelper.importJsonUser(context) == null){
+            user = new User("username");
+        }
+        else{
+            user = JSONHelper.importJsonUser(context);
+        }
+        switch (code){
+            case 0:
+                user.setCountEchinocactus();
+                break;
+            case 1:
+                user.setCountMimosa();
+                break;
+            case 2:
+                user.setCountMonstera();
+                break;
+            case 3:
+                user.setCountOrchid();
+                break;
+            case 4:
+                user.setCountRose();
+                break;
+        }
+        JSONHelper.saveJsonUser(context,user);
     }
 
     private void showDialog(String command, String result){

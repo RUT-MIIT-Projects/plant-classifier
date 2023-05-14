@@ -1,4 +1,4 @@
-package com.plants.app.adapters.parser;
+package com.plants.app.adapters.plants;
 
 import android.os.Parcel;
 import android.os.Parcelable;
