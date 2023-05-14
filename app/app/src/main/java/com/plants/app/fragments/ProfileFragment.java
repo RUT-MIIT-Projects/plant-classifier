@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.plants.app.R;
+import com.plants.app.adapters.ReadAndWrite;
 import com.plants.app.databinding.FragmentProfileBinding;
 
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.editUsername.setVisibility(View.INVISIBLE);
         avatar = binding.userImage.findViewById(R.id.userImage);
+        if (ReadAndWrite.loadAvatar(getContext()) != null ) avatar.setImageBitmap(ReadAndWrite.loadAvatar(getContext()));
 
         binding.upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +89,7 @@ public class ProfileFragment extends Fragment {
                         try {
                             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
                             avatar.setImageURI(selectedImage);
+                            ReadAndWrite.saveAvatar(getContext(),bitmap);
                         } catch (IOException e) {
                             Log.e("Profile.startGallery", "Failed to import image from gallery");
                         }
