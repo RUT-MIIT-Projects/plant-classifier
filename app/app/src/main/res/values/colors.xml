@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="green_200">#65C8A1</color>
-    <color name="green_500">#9EE1C7</color>
-    <color name="green_700">#4CAF50</color>
+    <color name="green_200">#50C878</color>
+    <color name="green_500">#3CB371</color>
+    <color name="green_700">#65C8A1</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#474747</color>
+    <color name="grey">#454545</color>
     <color name="grey_100">#B1B1B1</color>
+    <color name="transparent">#00FFFFFF</color>
 
+    <!-- Background logo -->
     <color name="ic_launcher_background">@color/green_200</color>
 
 </resources>

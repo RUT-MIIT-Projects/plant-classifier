@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.plants.app.fragments.HomeFragment"
+        android:label="@string/Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articlesFragment"
+        android:name="com.plants.app.fragments.ArticlesFragment"
+        android:label="@string/Articles"
+        tools:layout="@layout/fragment_articles" >
+        <action
+            android:id="@+id/action_articlesFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.plants.app.fragments.ProfileFragment"
+        android:label="@string/Profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.plants.app.fragments.ArticleFragment"
+        android:label=""
+        tools:layout="@layout/fragment_article" >
+        <action
+            android:id="@+id/action_articleFragment_to_articlesFragment"
+            app:destination="@id/articlesFragment" />
+        <argument
+            android:name="Plant"
+            app:argType="com.plants.app.adapters.plants.Plant" />
+    </fragment>
+</navigation>
