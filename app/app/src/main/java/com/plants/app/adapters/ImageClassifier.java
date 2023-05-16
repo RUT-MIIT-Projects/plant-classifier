@@ -18,7 +18,7 @@ public class ImageClassifier {
     private static String[] plants = {"Кактус", "Мимоза", "Монстера", "Орхидея", "Роза"};
     public static int IMAGE_SIZE = 100;
 
-    public static Integer classifyImage(Bitmap bitmap, Context context) {
+    public static String classifyImage(Bitmap bitmap, Context context) {
         int imageSize = IMAGE_SIZE;
         bitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
 
@@ -68,7 +68,7 @@ public class ImageClassifier {
             // Releases model resources if no longer used.
             model.close();
 
-            return maxPos;
+            return plants[maxPos];
 
         } catch (IOException e) {
             Log.e("ImageClassifier", "Import error",e);

@@ -26,8 +26,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.plants.app.R;
+import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.adapters.JSONHelper;
 import com.plants.app.adapters.ReadAndWrite;
+import com.plants.app.user.LoadUser;
 import com.plants.app.user.User;
 import com.plants.app.databinding.FragmentProfileBinding;
 
@@ -111,19 +113,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private User handlerUser(Context context){
-        User user;
-        if (JSONHelper.importJsonUser(context) == null) {
-            user = new User("username");
-            JSONHelper.saveJsonUser(context, user);
-        }
-        else user = JSONHelper.importJsonUser(context);
+        User user = LoadUser.getUser(getContext());
 
         binding.username.setText(String.valueOf(user.getUsername()));
-        binding.countEchinocactus.setText(String.valueOf(user.getCountEchinocactus()));
-        binding.countMimosa.setText(String.valueOf(user.getCountMimosa()));
-        binding.countMonstera.setText(String.valueOf(user.getCountMonstera()));
-        binding.countOrchid.setText(String.valueOf(user.getCountOrchid()));
-        binding.countRose.setText(String.valueOf(user.getCountRose()));
+        binding.countEchinocactus.setText(user.getCountPlants().get(ImageClassifier.getPlants()[0]));
+        binding.countMimosa.setText(user.getCountPlants().get(ImageClassifier.getPlants()[1]));
+        binding.countMonstera.setText(user.getCountPlants().get(ImageClassifier.getPlants()[2]));
+        binding.countOrchid.setText(user.getCountPlants().get(ImageClassifier.getPlants()[3]));
+        binding.countRose.setText(user.getCountPlants().get(ImageClassifier.getPlants()[4]));
 
         return user;
     }

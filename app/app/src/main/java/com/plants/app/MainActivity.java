@@ -35,9 +35,4 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         return navController.navigateUp() || super.onSupportNavigateUp();
     }
-
-
-//    imageView.setImageBitmap(bitmap);
-//    bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
-
 }
