@@ -1,4 +1,4 @@
-package com.plants.app.adapters.user;
+package com.plants.app.user;
 
 public class User {
     private String username;

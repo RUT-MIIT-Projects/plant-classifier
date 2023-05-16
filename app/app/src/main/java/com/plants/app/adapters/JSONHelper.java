@@ -4,9 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.plants.app.adapters.plants.Plant;
-import com.plants.app.adapters.plants.Root;
-import com.plants.app.adapters.user.User;
+import com.plants.app.plants.Plant;
+import com.plants.app.plants.Root;
+import com.plants.app.user.User;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ public class JSONHelper {
     private static final String FILE_NAME_PLANTS = "data.json";
     private static final String FILE_NAME_USER = "user.json";
 
-    public static ArrayList<Plant> importJsonPlants(Context context){
+    public static Root importJsonPlants(Context context){
         Gson gson = new Gson();
 
         try(InputStream inputStream = context.getAssets().open(FILE_NAME_PLANTS);
@@ -27,7 +27,7 @@ public class JSONHelper {
 
             Root root = gson.fromJson(streamReader, Root.class);
 
-            return root.getPlants();
+            return root;
         }
         catch(IOException e){
             Log.e("JSONHelper", "ERROR: import JSON plants",e);

@@ -34,7 +34,7 @@ import android.widget.Toast;
 import com.plants.app.R;
 import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.adapters.JSONHelper;
-import com.plants.app.adapters.user.User;
+import com.plants.app.user.User;
 import com.plants.app.databinding.CustomDialogDoneBinding;
 import com.plants.app.databinding.CustomDialogFailedBinding;
 import com.plants.app.databinding.FragmentHomeBinding;
@@ -199,7 +199,7 @@ public class HomeFragment extends Fragment {
 
     public static void broadcast(String namePlant, View view, Context context){
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Plant", ArticlesFragment.importPlant(namePlant,context));
+        bundle.putParcelable("Plant", JSONHelper.importJsonPlants(context).importPlant(namePlant,context));
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment,bundle);
     }
 }

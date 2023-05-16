@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.plants.app.R;
+import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.adapters.JSONHelper;
-import com.plants.app.adapters.plants.Plant;
 import com.plants.app.databinding.FragmentArticlesBinding;
 
 public class ArticlesFragment extends Fragment {
@@ -34,31 +34,31 @@ public class ArticlesFragment extends Fragment {
         binding.echinocactus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcast("Кактус", view, getContext());
+                broadcast(ImageClassifier.getPlants()[0], view, getContext());
             }
         });
         binding.mimosa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcast("Мимоза", view, getContext());
+                broadcast(ImageClassifier.getPlants()[1], view, getContext());
             }
         });
         binding.monstera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcast("Монстера", view, getContext());
+                broadcast(ImageClassifier.getPlants()[2], view, getContext());
             }
         });
         binding.orchid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcast("Орхидея", view, getContext());
+                broadcast(ImageClassifier.getPlants()[3], view, getContext());
             }
         });
         binding.rose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcast("Роза", view, getContext());
+                broadcast(ImageClassifier.getPlants()[4], view, getContext());
             }
         });
 
@@ -66,16 +66,8 @@ public class ArticlesFragment extends Fragment {
 
     public static void broadcast(String namePlant, View view, Context context){
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Plant", importPlant(namePlant,context));
+        bundle.putParcelable("Plant", JSONHelper.importJsonPlants(context).importPlant(namePlant,context));
         Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
-    }
-
-    public static Plant importPlant(String name, Context context){
-
-        for (Plant plant : JSONHelper.importJsonPlants(context)){
-            if (plant.getName().equals(name)) return plant;
-        }
-        return null;
     }
 
 }

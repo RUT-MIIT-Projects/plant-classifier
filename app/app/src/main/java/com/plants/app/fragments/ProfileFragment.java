@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.plants.app.R;
 import com.plants.app.adapters.JSONHelper;
 import com.plants.app.adapters.ReadAndWrite;
-import com.plants.app.adapters.user.User;
+import com.plants.app.user.User;
 import com.plants.app.databinding.FragmentProfileBinding;
 
 import java.io.IOException;
