@@ -19,21 +19,20 @@ public class ImageClassifier {
     public static int IMAGE_SIZE = 100;
 
     public static String classifyImage(Bitmap bitmap, Context context) {
-        int imageSize = IMAGE_SIZE;
-        bitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false);
+        bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
 
         try {
             Model1 model = Model1.newInstance(context);
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 100, 100, 3}, DataType.FLOAT32);
-            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
+            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * IMAGE_SIZE * IMAGE_SIZE * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
-            int[] intValues = new int[imageSize * imageSize];
+            int[] intValues = new int[IMAGE_SIZE * IMAGE_SIZE];
             bitmap.getPixels(intValues, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
             int pixel = 0;
 
-            for(int i = 0; i < imageSize; i++) {
-                for(int j = 0; j < imageSize; j++) {
+            for(int i = 0; i < IMAGE_SIZE; i++) {
+                for(int j = 0; j < IMAGE_SIZE; j++) {
                     int pixelValue = intValues[pixel++]; //RGB together
                     byteBuffer.putFloat(((pixelValue >> 16) & 0xFF) * (1.f));
                     byteBuffer.putFloat(((pixelValue >> 8) & 0xFF) * (1.f));
