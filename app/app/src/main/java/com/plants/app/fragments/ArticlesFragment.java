@@ -31,36 +31,11 @@ public class ArticlesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.echinocactus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                broadcast(ImageClassifier.getPlants()[0], view, getContext());
-            }
-        });
-        binding.mimosa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                broadcast(ImageClassifier.getPlants()[1], view, getContext());
-            }
-        });
-        binding.monstera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                broadcast(ImageClassifier.getPlants()[2], view, getContext());
-            }
-        });
-        binding.orchid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                broadcast(ImageClassifier.getPlants()[3], view, getContext());
-            }
-        });
-        binding.rose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                broadcast(ImageClassifier.getPlants()[4], view, getContext());
-            }
-        });
+        binding.echinocactus.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[0], viewCast, getContext()));
+        binding.mimosa.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[1], viewCast, getContext()));
+        binding.monstera.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[2], viewCast, getContext()));
+        binding.orchid.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[3], viewCast, getContext()));
+        binding.rose.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[4], viewCast, getContext()));
 
     }
 

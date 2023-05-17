@@ -13,8 +13,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -57,19 +55,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkCameraPermission(getContext());
-            }
 
-        });
-        binding.gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
-            }
-        });
+        binding.camera.setOnClickListener(viewCast -> checkCameraPermission(getContext()));
+        binding.gallery.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
     }
 
     private void checkCameraPermission(Context context){
@@ -88,71 +76,56 @@ public class HomeFragment extends Fragment {
             });
 
     ActivityResultLauncher<Intent> startCamera = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Bundle bundle = result.getData().getExtras();
-                        bitmap = (Bitmap) bundle.get("data");
-                        result();
-                    }
-                    else Toast.makeText(getContext(), "Изображение не сделано",Toast.LENGTH_LONG).show();
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    bitmap = (Bitmap) bundle.get("data");
+                    handlerResult(getContext());
                 }
-            }
-    );
-
-    ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri selectedImage = result.getData().getData();
-                        try {
-                            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
-                            result();
-                        } catch (IOException e) {
-                            Log.e("HomeFragment.startGallery", "Failed to import image from gallery");
-                        }
-                    }
-                    else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
-                }
+                else Toast.makeText(getContext(), "Изображение не сделано",Toast.LENGTH_LONG).show();
             });
 
-    private void result(){
+    ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri selectedImage = result.getData().getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                        handlerResult(getContext());
+                    } catch (IOException e) {
+                        Log.e("HomeFragment.startGallery", "Failed to import image from gallery");
+                    }
+                }
+                else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
+            });
+
+    private void handlerResult(Context context){
         if (bitmap != null) {
-            String result = ImageClassifier.classifyImage(bitmap, getContext());
+            String result = ImageClassifier.classifyImage(bitmap, context);
             if (result != null) {
-                User user = LoadUser.getUser(getContext());
+                User user = LoadUser.getUser(context);
                 user.saveResult(result);
-                JSONHelper.saveJsonUser(getContext(), user);
-                showDialog("DONE", result);
+                JSONHelper.saveJsonUser(context, user);
+                showDialog(context, "DONE", result);
             }
-            else showDialog("FAILED", "None");
+            else showDialog(context, "FAILED", "None");
         }
     }
 
-    private void showDialog(String command, String result){
-        Dialog dialog = new Dialog(getContext());
+    private void showDialog(Context context, String command, String result){
+        Dialog dialog = new Dialog(context);
 
         if (command.equals("DONE")) {
             dialog.setContentView(R.layout.custom_dialog_done);
             CustomDialogDoneBinding bindingDone = CustomDialogDoneBinding.bind(dialog.findViewById(R.id.dialog));
             bindingDone.result.setText(result);
-            bindingDone.close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.cancel();
-                }
-            });
-            bindingDone.toArticle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.cancel();
-                    broadcast(result, getView(),getContext());
-                }
-            });
+
+            bindingDone.close.setOnClickListener(view -> dialog.cancel());
+            bindingDone.toArticle.setOnClickListener(view -> {
+                        dialog.cancel();
+                        broadcast(result, getView(), context);
+                    });
+
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         }
@@ -160,12 +133,7 @@ public class HomeFragment extends Fragment {
             dialog.setContentView(R.layout.custom_dialog_failed);
             CustomDialogFailedBinding bindingFailed = CustomDialogFailedBinding.bind(dialog.findViewById(R.id.dialog));
 
-            bindingFailed.close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.cancel();
-                }
-            });
+            bindingFailed.close.setOnClickListener(view -> dialog.cancel());
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         }

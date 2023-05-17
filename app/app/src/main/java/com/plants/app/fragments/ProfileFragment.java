@@ -8,8 +8,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -36,7 +34,6 @@ import com.plants.app.databinding.FragmentProfileBinding;
 import java.io.IOException;
 
 
-
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     Bitmap bitmap;
@@ -57,63 +54,48 @@ public class ProfileFragment extends Fragment {
         handlerAvatar(getContext());
         User user = handlerUser(getContext());
 
-        binding.upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
-            }
-        });
+        binding.upload.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
 
-        binding.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.username.setVisibility(View.INVISIBLE);
-                binding.editUsername.setVisibility(View.VISIBLE);
+        binding.edit.setOnClickListener(viewCast -> {
+                    binding.username.setVisibility(View.INVISIBLE);
+                    binding.editUsername.setVisibility(View.VISIBLE);
+                });
+        binding.editUsername.setOnKeyListener((view1, keyCode, keyEvent) -> {
+            if (keyCode == KeyEvent.KEYCODE_ENTER){
+                String newUsername = binding.editUsername.getText().toString();
+                binding.username.setText(newUsername);
+                binding.editUsername.setVisibility(View.INVISIBLE);
+                binding.username.setVisibility(View.VISIBLE);
+                user.setUsername(newUsername);
+                JSONHelper.saveJsonUser(getContext(),user);
+                return true;
             }
-        });
-        binding.editUsername.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER){
-                    String newUsername = binding.editUsername.getText().toString();
-                    binding.username.setText(newUsername);
-                    binding.editUsername.setVisibility(View.INVISIBLE);
-                    binding.username.setVisibility(View.VISIBLE);
-                    user.setUsername(newUsername);
-                    JSONHelper.saveJsonUser(getContext(),user);
-                    return true;
-
-                }
-                return false;
-            }
+            return false;
         });
     }
+
     ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri selectedImage = result.getData().getData();
-                        try {
-                            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
-                            avatar.setImageURI(selectedImage);
-                            ReadAndWrite.saveAvatar(getContext(),bitmap);
-                        } catch (IOException e) {
-                            Log.e("Profile.startGallery", "Failed to import image from gallery");
-                        }
+            new ActivityResultContracts.StartActivityForResult(),result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri selectedImage = result.getData().getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                        avatar.setImageURI(selectedImage);
+                        ReadAndWrite.saveAvatar(getContext(),bitmap);
+                    } catch (IOException e) {
+                        Log.e("Profile.startGallery", "Failed to import image from gallery");
                     }
-                    else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
                 }
+                else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
             });
 
     private void handlerAvatar(Context context) {
         if (ReadAndWrite.loadAvatar(context) != null)
-            avatar.setImageBitmap(ReadAndWrite.loadAvatar(getContext()));
+            avatar.setImageBitmap(ReadAndWrite.loadAvatar(context));
     }
 
     private User handlerUser(Context context){
-        User user = LoadUser.getUser(getContext());
+        User user = LoadUser.getUser(context);
 
         binding.username.setText(String.valueOf(user.getUsername()));
         binding.countEchinocactus.setText(user.getCountPlants().get(ImageClassifier.getPlants()[0]));
