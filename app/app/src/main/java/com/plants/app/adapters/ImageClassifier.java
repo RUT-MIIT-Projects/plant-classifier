@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.plants.app.MainActivity;
 import com.plants.app.ml.Model1;
 
 import org.tensorflow.lite.DataType;
@@ -13,6 +12,7 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 public class ImageClassifier {
     private static final String[] plants = {"Кактус", "Мимоза", "Монстера", "Орхидея", "Роза"};
@@ -44,18 +44,8 @@ public class ImageClassifier {
 
             Model1.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-            float[] confidence = outputFeature0.getFloatArray();
-
-            int maxPos = 0;
-            float maxConfidence = 0;
-            for (int i = 0; i < confidence.length; i++) {
-                if (confidence[i] > maxConfidence) {
-                    maxConfidence = confidence[i];
-                    maxPos = i;
-                }
-            }
             model.close();
-            return plants[maxPos];
+            return predictHandler(outputFeature0);
 
         } catch (IOException e) {
             Log.e("ImageClassifier", "Import error",e);
@@ -65,5 +55,32 @@ public class ImageClassifier {
 
     public static String[] getPlants() {
         return plants;
+    }
+
+    private static String predictHandler(TensorBuffer outputFeature) {
+        float[] confidence = outputFeature.getFloatArray();
+        int maxPos = 0;
+        float maxConfidence = 0;
+
+        for (int i = 0; i < confidence.length; i++) {
+            if (confidence[i] > maxConfidence) {
+                maxConfidence = confidence[i];
+                maxPos = i;
+            }
+        }
+
+        if (maxConfidence < 0.7) {
+            return null;
+        }
+
+        double[] roundConfidence = new double[confidence.length];
+        for (int i = 0; i < confidence.length; i++) {
+            roundConfidence[i] = Math.round(confidence[i] * 10.0) / 10.0;
+        }
+        Arrays.sort(roundConfidence);
+        if (roundConfidence[confidence.length - 1] == roundConfidence[confidence.length - 2]) {
+            return null;
+        }
+        return plants[maxPos];
     }
 }
