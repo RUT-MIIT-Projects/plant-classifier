@@ -27,10 +27,6 @@ public class User {
         }
     }
 
-    public void setCountPlants(HashMap<String, String> countPlants) {
-        this.countPlants = countPlants;
-    }
-
     public HashMap<String, String> getCountPlants() {
         return countPlants;
     }
