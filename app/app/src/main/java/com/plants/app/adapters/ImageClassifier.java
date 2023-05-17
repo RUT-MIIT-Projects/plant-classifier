@@ -15,7 +15,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class ImageClassifier {
-    private static String[] plants = {"Кактус", "Мимоза", "Монстера", "Орхидея", "Роза"};
+    private static final String[] plants = {"Кактус", "Мимоза", "Монстера", "Орхидея", "Роза"};
     public static int IMAGE_SIZE = 100;
 
     public static String classifyImage(Bitmap bitmap, Context context) {
@@ -24,38 +24,28 @@ public class ImageClassifier {
 
         try {
             Model1 model = Model1.newInstance(context);
-
-            // Creates inputs for reference
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 100, 100, 3}, DataType.FLOAT32);
-
-            // byteBuffer contains pixels from the image. 4 byte (float) * area * RGB
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
-            //pixel arrays
             int[] intValues = new int[imageSize * imageSize];
             bitmap.getPixels(intValues, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
             int pixel = 0;
 
-            //iterate over each pixel and extract R, G, B values. Add those values individually to the byteBuffer
             for(int i = 0; i < imageSize; i++) {
                 for(int j = 0; j < imageSize; j++) {
                     int pixelValue = intValues[pixel++]; //RGB together
-                    byteBuffer.putFloat(((pixelValue >> 16) & 0xFF) * (1.f / 1));
-                    byteBuffer.putFloat(((pixelValue >> 8) & 0xFF) * (1.f / 1));
-                    byteBuffer.putFloat((pixelValue & 0xFF) * (1.f / 1));
+                    byteBuffer.putFloat(((pixelValue >> 16) & 0xFF) * (1.f));
+                    byteBuffer.putFloat(((pixelValue >> 8) & 0xFF) * (1.f));
+                    byteBuffer.putFloat((pixelValue & 0xFF) * (1.f));
                 }
             }
-
             inputFeature0.loadBuffer(byteBuffer);
 
-            // Runs model inference and gets result
             Model1.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
             float[] confidence = outputFeature0.getFloatArray();
 
-            // find the index of the class with the biggest confidence
             int maxPos = 0;
             float maxConfidence = 0;
             for (int i = 0; i < confidence.length; i++) {
@@ -64,10 +54,7 @@ public class ImageClassifier {
                     maxPos = i;
                 }
             }
-
-            // Releases model resources if no longer used.
             model.close();
-
             return plants[maxPos];
 
         } catch (IOException e) {
