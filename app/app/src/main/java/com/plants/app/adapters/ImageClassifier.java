@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class ImageClassifier {
     private static final String[] plants = {"Кактус", "Мимоза", "Монстера", "Орхидея", "Роза"};
-    public static int IMAGE_SIZE = 100;
+    public final static int IMAGE_SIZE = 100;
 
     public static String classifyImage(Bitmap bitmap, Context context) {
         bitmap = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, false);
