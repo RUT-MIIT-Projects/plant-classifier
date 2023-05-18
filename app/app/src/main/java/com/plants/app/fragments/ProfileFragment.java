@@ -81,8 +81,9 @@ public class ProfileFragment extends Fragment {
         binding.done.setOnClickListener(view -> {rename(context, view, user);});
     }
     private void rename(Context context, View view, User user){
-        String newUsername = binding.editUsername.getText().toString();
+        String newUsername = binding.editUsername.getText().toString().trim();
         binding.username.setText(newUsername);
+        binding.editUsername.setText(newUsername);
 
         binding.editUsername.setVisibility(View.INVISIBLE);
         binding.done.setVisibility(View.INVISIBLE);
