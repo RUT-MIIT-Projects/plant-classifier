@@ -137,7 +137,7 @@
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/mimoza"/>
+                android:src="@drawable/mimosa"/>
             <TextView
                 android:id="@+id/countMimosa"
                 android:layout_width="wrap_content"
