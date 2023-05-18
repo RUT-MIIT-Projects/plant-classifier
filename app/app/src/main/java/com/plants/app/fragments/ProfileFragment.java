@@ -2,6 +2,7 @@ package com.plants.app.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -50,32 +52,52 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.editUsername.setVisibility(View.INVISIBLE);
+        binding.done.setVisibility(View.INVISIBLE);
         avatar = binding.userImage.findViewById(R.id.userImage);
+
         handlerAvatar(getContext());
         User user = handlerUser(getContext());
 
         binding.upload.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
-        handlerRename(getContext(), user);
+        handlerButtonsRename(getContext(), user);
     }
-    private void handlerRename(Context context, User user){
+    private void handlerButtonsRename(Context context, User user){
         binding.edit.setOnClickListener(viewCast -> {
             binding.username.setVisibility(View.INVISIBLE);
             binding.editUsername.setVisibility(View.VISIBLE);
+
+            binding.edit.setVisibility(View.INVISIBLE);
+            binding.done.setVisibility(View.VISIBLE);
         });
+
         binding.editUsername.setOnKeyListener((view1, keyCode, keyEvent) -> {
             if (keyCode == KeyEvent.KEYCODE_ENTER){
-                String newUsername = binding.editUsername.getText().toString();
-
-                binding.username.setText(newUsername);
-                binding.editUsername.setVisibility(View.INVISIBLE);
-                binding.username.setVisibility(View.VISIBLE);
-
-                user.setUsername(newUsername);
-                JSONHelper.saveJsonUser(context,user);
+                rename(context, getView(), user);
                 return true;
             }
             return false;
         });
+
+        binding.done.setOnClickListener(view -> {rename(context, view, user);});
+    }
+    private void rename(Context context, View view, User user){
+        String newUsername = binding.editUsername.getText().toString();
+        binding.username.setText(newUsername);
+
+        binding.editUsername.setVisibility(View.INVISIBLE);
+        binding.done.setVisibility(View.INVISIBLE);
+
+        binding.edit.setVisibility(View.VISIBLE);
+        binding.username.setVisibility(View.VISIBLE);
+
+        user.setUsername(newUsername);
+        JSONHelper.saveJsonUser(context,user);
+        hideKeyboard(context,view);
+    }
+
+    public static void hideKeyboard(Context context, View view) {
+        InputMethodManager manager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
