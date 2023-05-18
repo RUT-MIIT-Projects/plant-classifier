@@ -55,19 +55,23 @@ public class ProfileFragment extends Fragment {
         User user = handlerUser(getContext());
 
         binding.upload.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
-
+        handlerRename(getContext(), user);
+    }
+    private void handlerRename(Context context, User user){
         binding.edit.setOnClickListener(viewCast -> {
-                    binding.username.setVisibility(View.INVISIBLE);
-                    binding.editUsername.setVisibility(View.VISIBLE);
-                });
+            binding.username.setVisibility(View.INVISIBLE);
+            binding.editUsername.setVisibility(View.VISIBLE);
+        });
         binding.editUsername.setOnKeyListener((view1, keyCode, keyEvent) -> {
             if (keyCode == KeyEvent.KEYCODE_ENTER){
                 String newUsername = binding.editUsername.getText().toString();
+
                 binding.username.setText(newUsername);
                 binding.editUsername.setVisibility(View.INVISIBLE);
                 binding.username.setVisibility(View.VISIBLE);
+
                 user.setUsername(newUsername);
-                JSONHelper.saveJsonUser(getContext(),user);
+                JSONHelper.saveJsonUser(context,user);
                 return true;
             }
             return false;

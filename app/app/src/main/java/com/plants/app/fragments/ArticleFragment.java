@@ -31,18 +31,22 @@ public class ArticleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
-            Plant plant = getArguments().getParcelable("Plant");
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(plant.getName());
-            binding.name.setText(plant.getName());
-            binding.WateringInfo.setText(plant.getWatering());
-            binding.InsolationInfo.setText(plant.getInsolation());
-            binding.PruningInfo.setText(plant.getPruning());
-            binding.SoilInfo.setText(plant.getSoil());
-            binding.PotSizeInfo.setText(plant.getPot_size());
-
-            Drawable drawable = ReadAndWrite.importImage(getContext(),plant.getPicture());
-            binding.imagePlant.setImageDrawable(drawable);
+            replacementArticle(getArguments());
         }
         else Log.e("ArticleFragment", "Argument not found");
+    }
+
+    private void replacementArticle(Bundle bundle){
+        Plant plant = bundle.getParcelable("Plant");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(plant.getName());
+        binding.name.setText(plant.getName());
+        binding.WateringInfo.setText(plant.getWatering());
+        binding.InsolationInfo.setText(plant.getInsolation());
+        binding.PruningInfo.setText(plant.getPruning());
+        binding.SoilInfo.setText(plant.getSoil());
+        binding.PotSizeInfo.setText(plant.getPot_size());
+
+        Drawable drawable = ReadAndWrite.importImage(getContext(),plant.getPicture());
+        binding.imagePlant.setImageDrawable(drawable);
     }
 }
