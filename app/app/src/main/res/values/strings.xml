@@ -40,4 +40,5 @@
     <!-- Fragment Profile -->
     <string name="user">username</string>
     <string name="countText">Количество найденных растений</string>
+
 </resources>
