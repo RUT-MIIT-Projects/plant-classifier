@@ -19,11 +19,8 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:exported="true"/>
-        <activity
-            android:name=".StartActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" >
+            android:theme="@style/Theme.App.SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

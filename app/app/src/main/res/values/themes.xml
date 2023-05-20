@@ -17,4 +17,12 @@
         <!-- Cursor -->
         <item name="colorAccent">?attr/colorPrimary</item>
     </style>
+
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="splashScreenIconSize">500dp</item>
+        <item name="postSplashScreenTheme">@style/Theme.App</item>
+
+    </style>
 </resources>
