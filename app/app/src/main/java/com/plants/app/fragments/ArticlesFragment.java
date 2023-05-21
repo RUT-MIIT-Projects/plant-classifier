@@ -27,7 +27,7 @@ public class ArticlesFragment extends Fragment {
     private FragmentArticlesBinding binding;
 
     private ArrayList<Button> buttonsList;
-    private ArrayList<Integer> image = new ArrayList<>(Arrays.asList(
+    public  static ArrayList<Integer> image = new ArrayList<>(Arrays.asList(
             R.drawable.echinocactus,
             R.drawable.mimosa,
             R.drawable.monstera,
@@ -61,8 +61,8 @@ public class ArticlesFragment extends Fragment {
             buttonsList.add(new Button(ImageClassifier.getPlants()[i], image.get(i)));
         }
         ButtonAdapter adapter = new ButtonAdapter(buttonsList, context);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        binding.recyclerView.setHasFixedSize(true);
-        binding.recyclerView.setAdapter(adapter);
+        binding.recyclerViewButtons.setLayoutManager(new LinearLayoutManager(context));
+        binding.recyclerViewButtons.setHasFixedSize(true);
+        binding.recyclerViewButtons.setAdapter(adapter);
     }
 }

@@ -92,147 +92,18 @@
         android:layout_marginStart="20dp"
         />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/echinocactus"
-        style="@style/CardViewSize"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/countText"
-        android:layout_marginTop="20dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        >
-
-        <LinearLayout
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/echinocactus"/>
-            <TextView
-                android:id="@+id/countEchinocactus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/CardViewText"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp"
-                />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/mimosa"
-        style="@style/CardViewSize"
-        app:layout_constraintStart_toStartOf="@id/echinocactus"
-        app:layout_constraintTop_toBottomOf="@id/echinocactus"
-        android:layout_marginTop="10dp">
-
-        <LinearLayout
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/mimosa"/>
-            <TextView
-                android:id="@+id/countMimosa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/CardViewText"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/monstera"
-        style="@style/CardViewSize"
-        app:layout_constraintStart_toStartOf="@id/mimosa"
-        app:layout_constraintTop_toBottomOf="@id/mimosa"
-        android:layout_marginTop="10dp">
-
-        <LinearLayout
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/monstera"/>
-            <TextView
-                android:id="@+id/countMonstera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/CardViewText"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/orchid"
-        style="@style/CardViewSize"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/countText"
         android:layout_marginTop="20dp"
-        >
-
-        <LinearLayout
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/orchid"/>
-            <TextView
-                android:id="@+id/countOrchid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/CardViewText"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp"
-                />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/rose"
-        style="@style/CardViewSize"
-        app:layout_constraintEnd_toEndOf="@id/orchid"
-        app:layout_constraintTop_toBottomOf="@id/orchid"
-        android:layout_marginTop="10dp"
-        >
-
-        <LinearLayout
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/rose"/>
-            <TextView
-                android:id="@+id/countRose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/CardViewText"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp"
-                />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+        android:layout_marginBottom="70dp"
+        app:spanCount="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/countText"
+        tools:listitem="@layout/item_info"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

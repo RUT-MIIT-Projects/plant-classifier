@@ -14,6 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -29,17 +31,24 @@ import com.plants.app.R;
 import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.adapters.JSONHelper;
 import com.plants.app.adapters.ReadAndWrite;
+import com.plants.app.buttons.Button;
+import com.plants.app.buttons.ButtonAdapter;
+import com.plants.app.info.Info;
+import com.plants.app.info.InfoAdapter;
 import com.plants.app.user.LoadUser;
 import com.plants.app.user.User;
 import com.plants.app.databinding.FragmentProfileBinding;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     Bitmap bitmap;
     ImageView avatar;
+    private ArrayList<Info> infoList;
+    private ArrayList<Integer> image = ArticlesFragment.image;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,8 +64,8 @@ public class ProfileFragment extends Fragment {
         binding.done.setVisibility(View.INVISIBLE);
         avatar = binding.userImage.findViewById(R.id.userImage);
 
-        handlerAvatar(getContext());
-        User user = handlerUser(getContext());
+        initAvatar(getContext());
+        User user = initUser(getContext());
 
         binding.upload.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
         handlerButtonsRename(getContext(), user);
@@ -116,21 +125,29 @@ public class ProfileFragment extends Fragment {
                 else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
             });
 
-    private void handlerAvatar(Context context) {
+    private void initAvatar(Context context) {
         if (ReadAndWrite.loadAvatar(context) != null)
             avatar.setImageBitmap(ReadAndWrite.loadAvatar(context));
     }
 
-    private User handlerUser(Context context){
+    private User initUser(Context context){
         User user = LoadUser.getUser(context);
 
         binding.username.setText(String.valueOf(user.getUsername()));
-        binding.countEchinocactus.setText(user.getCountPlants().get(ImageClassifier.getPlants()[0]));
-        binding.countMimosa.setText(user.getCountPlants().get(ImageClassifier.getPlants()[1]));
-        binding.countMonstera.setText(user.getCountPlants().get(ImageClassifier.getPlants()[2]));
-        binding.countOrchid.setText(user.getCountPlants().get(ImageClassifier.getPlants()[3]));
-        binding.countRose.setText(user.getCountPlants().get(ImageClassifier.getPlants()[4]));
+        infoList = new ArrayList<>();
+        init(getContext(), user);
 
         return user;
+    }
+
+    private void init(Context context, User user){
+
+        for (int i = 0; i < ImageClassifier.getPlants().length; i++){
+            infoList.add(new Info(user.getCountPlants().get(ImageClassifier.getPlants()[i]), image.get(i)));
+        }
+        InfoAdapter adapter = new InfoAdapter(infoList, context);
+        binding.recyclerViewInfo.setLayoutManager(new GridLayoutManager(context, 2));
+        binding.recyclerViewInfo.setHasFixedSize(true);
+        binding.recyclerViewInfo.setAdapter(adapter);
     }
 }

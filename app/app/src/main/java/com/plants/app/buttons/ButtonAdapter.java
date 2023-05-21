@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.plants.app.R;
-import com.plants.app.databinding.ButtonItemBinding;
+import com.plants.app.databinding.ItemButtonBinding;
 import com.plants.app.fragments.ArticlesFragment;
 
 import java.util.ArrayList;
@@ -26,13 +26,13 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonHold
     }
 
     public class ButtonHolder extends RecyclerView.ViewHolder{
-        ButtonItemBinding binding;
+        ItemButtonBinding binding;
         ImageView imageView;
         TextView textView;
 
         public ButtonHolder(@NonNull View itemView) {
             super(itemView);
-            binding = ButtonItemBinding.bind(itemView);
+            binding = ItemButtonBinding.bind(itemView);
             imageView = binding.imagePlant;
             textView = binding.name;
         }
@@ -41,7 +41,7 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonHold
     @NonNull
     @Override
     public ButtonHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.button_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_button, parent, false);
         return new ButtonHolder(view);
     }
 
@@ -51,13 +51,7 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonHold
         holder.textView.setText(buttonList.get(position).getName());
 
         String name = buttonList.get(position).getName();
-        holder.binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ArticlesFragment.broadcast(name, view, context);
-            }
-        });
+        holder.binding.button.setOnClickListener(view -> ArticlesFragment.broadcast(name, view, context));
     }
 
     @Override
