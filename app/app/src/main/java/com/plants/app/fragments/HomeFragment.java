@@ -32,7 +32,6 @@ import android.widget.Toast;
 import com.plants.app.R;
 import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.adapters.JSONHelper;
-import com.plants.app.user.LoadUser;
 import com.plants.app.user.User;
 import com.plants.app.databinding.CustomDialogDoneBinding;
 import com.plants.app.databinding.CustomDialogFailedBinding;
@@ -103,7 +102,7 @@ public class HomeFragment extends Fragment {
         if (bitmap != null) {
             String result = ImageClassifier.classifyImage(bitmap, context);
             if (result != null) {
-                User user = LoadUser.getUser(context);
+                User user = User.getUser(context);
                 user.saveResult(result);
                 JSONHelper.saveJsonUser(context, user);
                 showDialog(context, "DONE", result);

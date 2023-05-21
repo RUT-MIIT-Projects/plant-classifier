@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -31,11 +30,8 @@ import com.plants.app.R;
 import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.adapters.JSONHelper;
 import com.plants.app.adapters.ReadAndWrite;
-import com.plants.app.buttons.Button;
-import com.plants.app.buttons.ButtonAdapter;
 import com.plants.app.info.Info;
 import com.plants.app.info.InfoAdapter;
-import com.plants.app.user.LoadUser;
 import com.plants.app.user.User;
 import com.plants.app.databinding.FragmentProfileBinding;
 
@@ -131,7 +127,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private User initUser(Context context){
-        User user = LoadUser.getUser(context);
+        User user = User.getUser(context);
 
         binding.username.setText(String.valueOf(user.getUsername()));
         infoList = new ArrayList<>();
