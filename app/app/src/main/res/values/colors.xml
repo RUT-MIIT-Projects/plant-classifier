@@ -3,7 +3,7 @@
     <color name="green_200">#50C878</color>
     <color name="green_500">#3CB371</color>
     <color name="green_700">#65C8A1</color>
-    <color name="teal_200">#FF03DAC5</color>
+    <color name="green_200_transparent">#4D50C878</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

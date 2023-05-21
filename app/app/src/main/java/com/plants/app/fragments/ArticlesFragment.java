@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,23 @@ import android.view.ViewGroup;
 import com.plants.app.R;
 import com.plants.app.adapters.ImageClassifier;
 import com.plants.app.adapters.JSONHelper;
+import com.plants.app.buttons.Button;
+import com.plants.app.buttons.ButtonAdapter;
 import com.plants.app.databinding.FragmentArticlesBinding;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ArticlesFragment extends Fragment {
     private FragmentArticlesBinding binding;
+
+    private ArrayList<Button> buttonsList;
+    private ArrayList<Integer> image = new ArrayList<>(Arrays.asList(
+            R.drawable.echinocactus,
+            R.drawable.mimosa,
+            R.drawable.monstera,
+            R.drawable.orchid,
+            R.drawable.rose));
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,12 +45,8 @@ public class ArticlesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.echinocactus.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[0], viewCast, getContext()));
-        binding.mimosa.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[1], viewCast, getContext()));
-        binding.monstera.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[2], viewCast, getContext()));
-        binding.orchid.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[3], viewCast, getContext()));
-        binding.rose.setOnClickListener(viewCast -> broadcast(ImageClassifier.getPlants()[4], viewCast, getContext()));
-
+        buttonsList = new ArrayList<>();
+        init(getContext());
     }
 
     public static void broadcast(String namePlant, View view, Context context){
@@ -45,4 +55,14 @@ public class ArticlesFragment extends Fragment {
         Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
     }
 
+    private void init(Context context){
+
+        for (int i = 0; i < ImageClassifier.getPlants().length; i++){
+            buttonsList.add(new Button(ImageClassifier.getPlants()[i], image.get(i)));
+        }
+        ButtonAdapter adapter = new ButtonAdapter(buttonsList, context);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setAdapter(adapter);
+    }
 }
