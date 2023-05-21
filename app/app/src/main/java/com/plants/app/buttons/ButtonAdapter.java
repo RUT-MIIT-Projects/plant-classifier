@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.plants.app.R;
 import com.plants.app.databinding.ItemButtonBinding;
-import com.plants.app.fragments.ArticlesFragment;
+import com.plants.app.screens.ArticlesFragment;
 
 import java.util.ArrayList;
 

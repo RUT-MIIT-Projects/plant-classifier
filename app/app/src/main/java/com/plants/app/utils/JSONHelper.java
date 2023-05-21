@@ -1,10 +1,9 @@
-package com.plants.app.adapters;
+package com.plants.app.utils;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.plants.app.plants.Plant;
 import com.plants.app.plants.Root;
 import com.plants.app.user.User;
 
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 public class JSONHelper {
     private static final String FILE_NAME_PLANTS = "data.json";

@@ -1,4 +1,4 @@
-package com.plants.app.adapters;
+package com.plants.app.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -2,8 +2,8 @@ package com.plants.app.user;
 
 import android.content.Context;
 
-import com.plants.app.adapters.ImageClassifier;
-import com.plants.app.adapters.JSONHelper;
+import com.plants.app.utils.ImageClassifier;
+import com.plants.app.utils.JSONHelper;
 
 import java.util.HashMap;
 

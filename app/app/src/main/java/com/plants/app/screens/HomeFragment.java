@@ -1,4 +1,4 @@
-package com.plants.app.fragments;
+package com.plants.app.screens;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -30,8 +30,8 @@ import android.widget.Toast;
 
 
 import com.plants.app.R;
-import com.plants.app.adapters.ImageClassifier;
-import com.plants.app.adapters.JSONHelper;
+import com.plants.app.utils.ImageClassifier;
+import com.plants.app.utils.JSONHelper;
 import com.plants.app.user.User;
 import com.plants.app.databinding.CustomDialogDoneBinding;
 import com.plants.app.databinding.CustomDialogFailedBinding;

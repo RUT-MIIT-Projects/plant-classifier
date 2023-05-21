@@ -1,4 +1,4 @@
-package com.plants.app.fragments;
+package com.plants.app.screens;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.plants.app.adapters.ReadAndWrite;
+import com.plants.app.utils.ReadAndWrite;
 import com.plants.app.plants.Plant;
 import com.plants.app.databinding.FragmentArticleBinding;
 

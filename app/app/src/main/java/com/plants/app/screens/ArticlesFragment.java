@@ -1,4 +1,4 @@
-package com.plants.app.fragments;
+package com.plants.app.screens;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.plants.app.R;
-import com.plants.app.adapters.ImageClassifier;
-import com.plants.app.adapters.JSONHelper;
+import com.plants.app.utils.ImageClassifier;
+import com.plants.app.utils.JSONHelper;
 import com.plants.app.buttons.Button;
 import com.plants.app.buttons.ButtonAdapter;
 import com.plants.app.databinding.FragmentArticlesBinding;
