@@ -12,6 +12,6 @@
     <color name="transparent">#00FFFFFF</color>
 
     <!-- Background logo -->
-    <color name="ic_launcher_background">@color/green_200</color>
+    <color name="ic_launcher_background">@color/white</color>
 
 </resources>
