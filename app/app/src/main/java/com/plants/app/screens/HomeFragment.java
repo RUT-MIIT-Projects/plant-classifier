@@ -43,6 +43,16 @@ import java.io.IOException;
 public class HomeFragment extends Fragment {
     public FragmentHomeBinding binding;
     public Bitmap bitmap;
+    private ActivityResultLauncher<String> requestPermissionLauncher;
+    private ActivityResultLauncher<Intent> openCamera;
+    private ActivityResultLauncher<Intent> openGallery;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        registerPermission();
+        initModules();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,47 +66,46 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.camera.setOnClickListener(viewCast -> checkCameraPermission(getContext()));
-        binding.gallery.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
+        binding.gallery.setOnClickListener(viewCast -> openGallery.launch(new Intent(MediaStore.ACTION_PICK_IMAGES)));
     }
 
     private void checkCameraPermission(Context context){
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-            startCamera.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE));
+            openCamera.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE));
         }
         else requestPermissionLauncher.launch(Manifest.permission.CAMERA);
     }
+    private void registerPermission() {
+        requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) checkCameraPermission(getContext());
+                    else Toast.makeText(getContext(), "Нужно ваше разрешение", Toast.LENGTH_SHORT).show();
+        });
+    }
 
-    ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted){
-                    checkCameraPermission(getContext());
-                }
-                else Toast.makeText(getContext(),"Need your permission",Toast.LENGTH_SHORT).show();
-            });
+    private void initModules() {
+        openCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
 
-    ActivityResultLauncher<Intent> startCamera = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Bundle bundle = result.getData().getExtras();
-                    bitmap = (Bitmap) bundle.get("data");
-                    handlerResult(getContext());
-                }
-                else Toast.makeText(getContext(), "Изображение не сделано",Toast.LENGTH_LONG).show();
-            });
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap = (Bitmap) bundle.get("data");
 
-    ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Uri selectedImage = result.getData().getData();
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
                         handlerResult(getContext());
-                    } catch (IOException e) {
-                        Log.e("HomeFragment.startGallery", "Failed to import image from gallery");
-                    }
-                }
-                else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
-            });
+                    } else Toast.makeText(getContext(), "Изображение не сделано", Toast.LENGTH_LONG).show();
+        });
+
+        openGallery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+
+                        Uri selectedImage = result.getData().getData();
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                            handlerResult(getContext());
+                        } catch (IOException e) {
+                            Log.e("HomeFragment.startGallery", "Failed to import image from gallery");
+                        }
+                    } else Toast.makeText(getContext(), "Изображение не выбрано", Toast.LENGTH_LONG).show();
+        });
+    }
 
     private void handlerResult(Context context){
         if (bitmap != null) {
