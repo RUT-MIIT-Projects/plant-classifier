@@ -1,6 +1,9 @@
 package com.plants.app.plants;
 
 import android.content.Context;
+
+import com.plants.app.utils.JSONHelper;
+
 import java.util.ArrayList;
 
 public class Root {
@@ -10,11 +13,16 @@ public class Root {
         return plants;
     }
 
-    public Plant importPlant(String name, Context context){
+    public Plant getPlant(String name){
 
         for (Plant plant : plants){
             if (plant.getName().equals(name)) return plant;
         }
         return null;
     }
+
+    public static Root getRoot(Context context){
+        return JSONHelper.importJsonPlants(context);
+    }
+
 }

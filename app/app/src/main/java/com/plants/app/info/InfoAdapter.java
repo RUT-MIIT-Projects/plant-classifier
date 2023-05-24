@@ -17,11 +17,9 @@ import java.util.ArrayList;
 
 public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ButtonHolder> {
     private ArrayList<Info> infoList;
-    private Context context;
 
-    public InfoAdapter(ArrayList<Info> infoList, Context context) {
+    public InfoAdapter(ArrayList<Info> infoList) {
         this.infoList = infoList;
-        this.context = context;
     }
 
     public class ButtonHolder extends RecyclerView.ViewHolder{

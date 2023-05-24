@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.provider.MediaStore;
@@ -23,13 +24,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.plants.app.R;
+import com.plants.app.DataModel;
 import com.plants.app.utils.ImageClassifier;
-import com.plants.app.utils.JSONHelper;
-import com.plants.app.utils.ReadAndWrite;
 import com.plants.app.info.Info;
 import com.plants.app.info.InfoAdapter;
 import com.plants.app.user.User;
@@ -41,15 +39,22 @@ import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
+    private DataModel dataModel;
     Bitmap bitmap;
-    ImageView avatar;
     private ArrayList<Info> infoList;
-    private ArrayList<Integer> image = ArticlesFragment.image;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dataModel = new ViewModelProvider(requireActivity()).get(DataModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
+        infoList = new ArrayList<>();
+        initInfo(getContext(), dataModel.getUser(getContext()));
         return binding.getRoot();
     }
 
@@ -58,10 +63,12 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.editUsername.setVisibility(View.INVISIBLE);
         binding.done.setVisibility(View.INVISIBLE);
-        avatar = binding.userImage.findViewById(R.id.userImage);
 
-        initAvatar(getContext());
-        User user = initUser(getContext());
+        binding.userImage.setImageBitmap(dataModel.getAvatar(getContext()));
+
+        User user = dataModel.getUser(getContext());
+        binding.username.setText(String.valueOf(user.getUsername()));
+
 
         binding.upload.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
         handlerButtonsRename(getContext(), user);
@@ -97,7 +104,8 @@ public class ProfileFragment extends Fragment {
         binding.username.setVisibility(View.VISIBLE);
 
         user.setUsername(newUsername);
-        JSONHelper.saveJsonUser(context,user);
+        dataModel.saveUser(context);
+
         hideKeyboard(context,view);
     }
 
@@ -112,8 +120,8 @@ public class ProfileFragment extends Fragment {
                     Uri selectedImage = result.getData().getData();
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
-                        avatar.setImageURI(selectedImage);
-                        ReadAndWrite.saveAvatar(getContext(),bitmap);
+                        binding.userImage.setImageURI(selectedImage);
+                        dataModel.saveAvatar(getContext(), bitmap);
                     } catch (IOException e) {
                         Log.e("Profile.startGallery", "Failed to import image from gallery");
                     }
@@ -121,27 +129,13 @@ public class ProfileFragment extends Fragment {
                 else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
             });
 
-    private void initAvatar(Context context) {
-        if (ReadAndWrite.loadAvatar(context) != null)
-            avatar.setImageBitmap(ReadAndWrite.loadAvatar(context));
-    }
-
-    private User initUser(Context context){
-        User user = User.getUser(context);
-
-        binding.username.setText(String.valueOf(user.getUsername()));
-        infoList = new ArrayList<>();
-        init(getContext(), user);
-
-        return user;
-    }
-
-    private void init(Context context, User user){
+    private void initInfo(Context context, User user){
 
         for (int i = 0; i < ImageClassifier.getPlants().length; i++){
-            infoList.add(new Info(user.getCountPlants().get(ImageClassifier.getPlants()[i]), image.get(i)));
+            infoList.add(new Info(user.getCountPlants().get(ImageClassifier.getPlants()[i]), dataModel.getImage().get(i)));
         }
-        InfoAdapter adapter = new InfoAdapter(infoList, context);
+
+        InfoAdapter adapter = new InfoAdapter(infoList);
         binding.recyclerViewInfo.setLayoutManager(new GridLayoutManager(context, 2));
         binding.recyclerViewInfo.setHasFixedSize(true);
         binding.recyclerViewInfo.setAdapter(adapter);

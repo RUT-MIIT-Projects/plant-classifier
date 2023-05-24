@@ -1,6 +1,5 @@
 package com.plants.app.buttons;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,9 @@ import java.util.ArrayList;
 
 public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonHolder> {
     private ArrayList<Button> buttonList;
-    private Context context;
 
-    public ButtonAdapter(ArrayList<Button> buttonList, Context context) {
+    public ButtonAdapter(ArrayList<Button> buttonList) {
         this.buttonList = buttonList;
-        this.context = context;
     }
 
     public class ButtonHolder extends RecyclerView.ViewHolder{
@@ -51,7 +48,7 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonHold
         holder.textView.setText(buttonList.get(position).getName());
 
         String name = buttonList.get(position).getName();
-        holder.binding.button.setOnClickListener(view -> ArticlesFragment.broadcast(name, view, context));
+        holder.binding.button.setOnClickListener(view -> ArticlesFragment.broadcast(name, view));
     }
 
     @Override

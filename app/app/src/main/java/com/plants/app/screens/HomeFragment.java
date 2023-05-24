@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -29,10 +30,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.plants.app.DataModel;
 import com.plants.app.R;
 import com.plants.app.utils.ImageClassifier;
-import com.plants.app.utils.JSONHelper;
-import com.plants.app.user.User;
 import com.plants.app.databinding.CustomDialogDoneBinding;
 import com.plants.app.databinding.CustomDialogFailedBinding;
 import com.plants.app.databinding.FragmentHomeBinding;
@@ -43,6 +43,7 @@ import java.io.IOException;
 public class HomeFragment extends Fragment {
     public FragmentHomeBinding binding;
     public Bitmap bitmap;
+    private DataModel dataModel;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     private ActivityResultLauncher<Intent> openCamera;
     private ActivityResultLauncher<Intent> openGallery;
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dataModel = new ViewModelProvider(requireActivity()).get(DataModel.class);
         registerPermission();
         initModules();
     }
@@ -111,9 +113,9 @@ public class HomeFragment extends Fragment {
         if (bitmap != null) {
             String result = ImageClassifier.classifyImage(bitmap, context);
             if (result != null) {
-                User user = User.getUser(context);
-                user.saveResult(result);
-                JSONHelper.saveJsonUser(context, user);
+                dataModel.getUser(getContext()).saveResult(result);
+                dataModel.saveUser(context);
+
                 showDialog(context, "DONE", result);
             }
             else showDialog(context, "FAILED", "None");
@@ -131,7 +133,7 @@ public class HomeFragment extends Fragment {
             bindingDone.close.setOnClickListener(view -> dialog.cancel());
             bindingDone.toArticle.setOnClickListener(view -> {
                         dialog.cancel();
-                        broadcast(result, getView(), context);
+                        broadcast(result, getView());
                     });
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -148,9 +150,9 @@ public class HomeFragment extends Fragment {
         else Log.e("showDialog","Command error");
     }
 
-    public static void broadcast(String namePlant, View view, Context context){
+    public static void broadcast(String namePlant, View view){
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Plant", JSONHelper.importJsonPlants(context).importPlant(namePlant,context));
+        bundle.putString("resultPlant", namePlant);
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment,bundle);
     }
 }
