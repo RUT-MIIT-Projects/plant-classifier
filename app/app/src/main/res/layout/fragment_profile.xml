@@ -64,8 +64,7 @@
         app:tint="@color/green_200"
         app:layout_constraintStart_toEndOf="@id/editUsername"
         android:layout_marginStart="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/username"
-        />
+        app:layout_constraintBottom_toBottomOf="@id/username"/>
 
     <ImageButton
         android:id="@+id/done"
@@ -76,8 +75,7 @@
         app:tint="@color/green_200"
         app:layout_constraintStart_toEndOf="@id/editUsername"
         android:layout_marginStart="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/username"
-        />
+        app:layout_constraintBottom_toBottomOf="@id/username"/>
 
     <TextView
         android:id="@+id/countText"
@@ -89,8 +87,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/username"
         android:layout_marginTop="60dp"
-        android:layout_marginStart="20dp"
-        />
+        android:layout_marginStart="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewInfo"
@@ -101,6 +98,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="70dp"
         app:spanCount="2"
+        android:overScrollMode="never"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/countText"

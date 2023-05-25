@@ -31,7 +31,6 @@
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintBottom_toTopOf="@+id/camera"/>
 
-
     <ImageButton
         android:id="@+id/camera"
         android:layout_width="wrap_content"
@@ -42,8 +41,7 @@
         android:contentDescription="@string/captureBtn"
         app:layout_constraintEnd_toStartOf="@id/gallery"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aboutApp"
-       />
+        app:layout_constraintTop_toBottomOf="@+id/aboutApp" />
 
     <ImageButton
         android:id="@+id/gallery"

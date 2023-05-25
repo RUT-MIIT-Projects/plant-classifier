@@ -45,7 +45,9 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/Orchid"
                 android:textSize="20dp" />
+
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
