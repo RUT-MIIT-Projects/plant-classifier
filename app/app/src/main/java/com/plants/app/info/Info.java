@@ -1,19 +1,19 @@
 package com.plants.app.info;
 
 public class Info {
-    private String count;
-    private Integer image;
+    private Integer count;
+    private Integer imageId;
 
-    public Info(String count, Integer image) {
+    public Info(Integer count, Integer imageId) {
         this.count = count;
-        this.image = image;
+        this.imageId = imageId;
     }
 
-    public String getCount() {
+    public Integer getCount() {
         return count;
     }
 
     public Integer getImage() {
-        return image;
+        return imageId;
     }
 }

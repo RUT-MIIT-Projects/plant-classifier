@@ -41,8 +41,8 @@ import java.io.IOException;
 
 
 public class HomeFragment extends Fragment {
-    public FragmentHomeBinding binding;
-    public Bitmap bitmap;
+    private FragmentHomeBinding binding;
+    private Bitmap bitmap;
     private DataModel dataModel;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     private ActivityResultLauncher<Intent> openCamera;
@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
 
     public static void broadcast(String namePlant, View view){
         Bundle bundle = new Bundle();
-        bundle.putString("resultPlant", namePlant);
+        bundle.putString("Plant", namePlant);
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment,bundle);
     }
 }

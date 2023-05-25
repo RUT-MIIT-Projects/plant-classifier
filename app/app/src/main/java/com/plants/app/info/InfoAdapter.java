@@ -1,6 +1,5 @@
 package com.plants.app.info;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +44,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ButtonHolder> 
     @Override
     public void onBindViewHolder(@NonNull ButtonHolder holder, int position) {
         holder.imageView.setImageResource(infoList.get(position).getImage());
-        holder.textView.setText(infoList.get(position).getCount());
+        holder.textView.setText(String.valueOf(infoList.get(position).getCount()));
     }
 
     @Override

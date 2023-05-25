@@ -48,12 +48,6 @@ public class ArticlesFragment extends Fragment {
         initButtons(getContext());
     }
 
-    public static void broadcast(String namePlant, View view){
-        Bundle bundle = new Bundle();
-        bundle.putString("Plant", namePlant);
-        Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
-    }
-
     private void initButtons(Context context){
 
         for (int i = 0; i < ImageClassifier.getPlants().length; i++){
@@ -63,5 +57,11 @@ public class ArticlesFragment extends Fragment {
         binding.recyclerViewButtons.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerViewButtons.setHasFixedSize(true);
         binding.recyclerViewButtons.setAdapter(adapter);
+    }
+
+    public static void broadcast(String namePlant, View view){
+        Bundle bundle = new Bundle();
+        bundle.putString("Plant", namePlant);
+        Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
     }
 }

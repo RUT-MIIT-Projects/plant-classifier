@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class User {
     private String username;
-    private HashMap<String, String> countPlants;
+    private HashMap<String, Integer> countPlants;
 
     public User(String username) {
         this.username = username;
@@ -27,17 +27,17 @@ public class User {
     private void loadCountPlants(){
         countPlants = new HashMap<>();
         for (String name : ImageClassifier.getPlants()){
-            countPlants.put(name, "0");
+            countPlants.put(name, 0);
         }
     }
 
-    public HashMap<String, String> getCountPlants() {
+    public HashMap<String, Integer> getCountPlants() {
         return countPlants;
     }
 
     public void saveResult(String result){
         if (countPlants.containsKey(result)){
-            countPlants.put(result, String.valueOf(Integer.parseInt(countPlants.get(result))+1));
+            countPlants.put(result, countPlants.get(result) + 1);
         }
     }
 

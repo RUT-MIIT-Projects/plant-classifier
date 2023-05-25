@@ -40,27 +40,30 @@ import java.util.ArrayList;
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private DataModel dataModel;
-    Bitmap bitmap;
+    private Bitmap bitmap;
     private ArrayList<Info> infoList;
+    private ActivityResultLauncher<Intent> openGallery;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataModel = new ViewModelProvider(requireActivity()).get(DataModel.class);
+        initModules();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        infoList = new ArrayList<>();
-        initInfo(getContext(), dataModel.getUser(getContext()));
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        infoList = new ArrayList<>();
+        initInfo(getContext(), dataModel.getUser(getContext()));
+
         binding.editUsername.setVisibility(View.INVISIBLE);
         binding.done.setVisibility(View.INVISIBLE);
 
@@ -70,9 +73,38 @@ public class ProfileFragment extends Fragment {
         binding.username.setText(String.valueOf(user.getUsername()));
 
 
-        binding.upload.setOnClickListener(viewCast -> startGallery.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
+        binding.upload.setOnClickListener(viewCast -> openGallery.launch(new Intent(MediaStore.ACTION_PICK_IMAGES)));
         handlerButtonsRename(getContext(), user);
     }
+
+    private void initModules() {
+        openGallery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Uri selectedImage = result.getData().getData();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
+                    binding.userImage.setImageURI(selectedImage);
+                    dataModel.saveAvatar(getContext(), bitmap);
+                } catch (IOException e) {
+                    Log.e("Profile.startGallery", "Failed to import image from gallery");
+                }
+            } else
+                Toast.makeText(getContext(), "Изображение не выбрано", Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private void initInfo(Context context, User user){
+
+        for (int i = 0; i < ImageClassifier.getPlants().length; i++){
+            infoList.add(new Info(user.getCountPlants().get(ImageClassifier.getPlants()[i]), dataModel.getImage().get(i)));
+        }
+
+        InfoAdapter adapter = new InfoAdapter(infoList);
+        binding.recyclerViewInfo.setLayoutManager(new GridLayoutManager(context, 2));
+        binding.recyclerViewInfo.setHasFixedSize(true);
+        binding.recyclerViewInfo.setAdapter(adapter);
+    }
+
     private void handlerButtonsRename(Context context, User user){
         binding.edit.setOnClickListener(viewCast -> {
             binding.username.setVisibility(View.INVISIBLE);
@@ -112,32 +144,5 @@ public class ProfileFragment extends Fragment {
     public static void hideKeyboard(Context context, View view) {
         InputMethodManager manager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    ActivityResultLauncher<Intent> startGallery = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Uri selectedImage = result.getData().getData();
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
-                        binding.userImage.setImageURI(selectedImage);
-                        dataModel.saveAvatar(getContext(), bitmap);
-                    } catch (IOException e) {
-                        Log.e("Profile.startGallery", "Failed to import image from gallery");
-                    }
-                }
-                else Toast.makeText(getContext(), "Изображение не выбрано",Toast.LENGTH_LONG).show();
-            });
-
-    private void initInfo(Context context, User user){
-
-        for (int i = 0; i < ImageClassifier.getPlants().length; i++){
-            infoList.add(new Info(user.getCountPlants().get(ImageClassifier.getPlants()[i]), dataModel.getImage().get(i)));
-        }
-
-        InfoAdapter adapter = new InfoAdapter(infoList);
-        binding.recyclerViewInfo.setLayoutManager(new GridLayoutManager(context, 2));
-        binding.recyclerViewInfo.setHasFixedSize(true);
-        binding.recyclerViewInfo.setAdapter(adapter);
     }
 }
