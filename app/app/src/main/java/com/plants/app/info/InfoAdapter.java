@@ -14,19 +14,19 @@ import com.plants.app.databinding.ItemInfoBinding;
 
 import java.util.ArrayList;
 
-public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ButtonHolder> {
+public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.InfoHolder> {
     private ArrayList<Info> infoList;
 
     public InfoAdapter(ArrayList<Info> infoList) {
         this.infoList = infoList;
     }
 
-    public class ButtonHolder extends RecyclerView.ViewHolder{
+    public class InfoHolder extends RecyclerView.ViewHolder{
         ItemInfoBinding binding;
         ImageView imageView;
         TextView textView;
 
-        public ButtonHolder(@NonNull View itemView) {
+        public InfoHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemInfoBinding.bind(itemView);
             imageView = binding.image;
@@ -36,13 +36,13 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ButtonHolder> 
 
     @NonNull
     @Override
-    public ButtonHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InfoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_info, parent, false);
-        return new ButtonHolder(view);
+        return new InfoHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ButtonHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InfoHolder holder, int position) {
         holder.imageView.setImageResource(infoList.get(position).getImage());
         holder.textView.setText(String.valueOf(infoList.get(position).getCount()));
     }
