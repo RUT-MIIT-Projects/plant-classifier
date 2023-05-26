@@ -48,7 +48,7 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonAdapter.ButtonHold
         holder.textView.setText(buttonList.get(position).getName());
 
         String name = buttonList.get(position).getName();
-        holder.binding.button.setOnClickListener(view -> ArticlesFragment.broadcast(name, view));
+        holder.binding.button.setOnClickListener(view -> ArticlesFragment.translation(name, view));
     }
 
     @Override

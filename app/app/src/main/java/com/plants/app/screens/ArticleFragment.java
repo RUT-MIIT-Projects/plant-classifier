@@ -46,7 +46,7 @@ public class ArticleFragment extends Fragment {
     }
 
     private void replacementArticle(Bundle bundle, Context context){
-        Plant plant = dataModel.getRoot(context).getPlant(bundle.getString("Plant"));
+        Plant plant = dataModel.getRoot().getPlant(bundle.getString("Plant"));
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(plant.getName());
 

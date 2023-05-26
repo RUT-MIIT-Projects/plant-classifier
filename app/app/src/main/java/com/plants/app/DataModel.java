@@ -1,10 +1,11 @@
 package com.plants.app;
 
-import android.content.Context;
+import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import androidx.lifecycle.ViewModel;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 import com.plants.app.plants.Root;
 import com.plants.app.user.User;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class DataModel extends ViewModel {
+public class DataModel extends AndroidViewModel {
     private User user;
     private Root root;
     private Bitmap avatar;
@@ -26,32 +27,38 @@ public class DataModel extends ViewModel {
             R.drawable.orchid,
             R.drawable.rose));
 
-    public User getUser(Context context){
-        if (user == null) user = User.getUser(context);
+    public DataModel(@NonNull Application application) {
+        super(application);
+        user = User.getUser(application.getApplicationContext());
+        root = Root.getRoot(application.getApplicationContext());
+        initAvatar();
+    }
+
+    public User getUser(){
         return user;
     }
 
-    public Root getRoot(Context context){
-        if (root == null) root = Root.getRoot(context);
+    public Root getRoot(){
         return root;
     }
 
-    public Bitmap getAvatar(Context context){
-        if (avatar == null) {
-            if (ReadAndWrite.loadAvatar(context) != null)
-                return ReadAndWrite.loadAvatar(context);
-            else return BitmapFactory.decodeResource(context.getResources(), R.drawable.avatar);
-        }
+    private void initAvatar(){
+        if (ReadAndWrite.loadAvatar(getApplication().getApplicationContext()) != null)
+            avatar = ReadAndWrite.loadAvatar(getApplication().getApplicationContext());
+        else avatar = BitmapFactory.decodeResource(getApplication().getApplicationContext().getResources(), R.drawable.avatar);
+    }
+
+    public Bitmap getAvatar(){
         return avatar;
     }
 
-    public void saveAvatar(Context context, Bitmap avatar){
+    public void saveAvatar(Bitmap avatar){
         this.avatar = avatar;
-        ReadAndWrite.saveAvatar(context, avatar);
+        ReadAndWrite.saveAvatar(getApplication().getApplicationContext(), avatar);
     }
 
-    public void saveUser(Context context){
-        JSONHelper.saveJsonUser(context,user);
+    public void saveUser(){
+        JSONHelper.saveJsonUser(getApplication().getApplicationContext(), user);
     }
 
     public ArrayList<Integer> getImage() {

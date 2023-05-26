@@ -59,7 +59,7 @@ public class ArticlesFragment extends Fragment {
         binding.recyclerViewButtons.setAdapter(adapter);
     }
 
-    public static void broadcast(String namePlant, View view){
+    public static void translation(String namePlant, View view){
         Bundle bundle = new Bundle();
         bundle.putString("Plant", namePlant);
         Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);

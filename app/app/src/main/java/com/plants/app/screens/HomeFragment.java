@@ -113,8 +113,8 @@ public class HomeFragment extends Fragment {
         if (bitmap != null) {
             String result = ImageClassifier.classifyImage(bitmap, context);
             if (result != null) {
-                dataModel.getUser(getContext()).saveResult(result);
-                dataModel.saveUser(context);
+                dataModel.getUser().saveResult(result);
+                dataModel.saveUser();
 
                 showDialog(context, "DONE", result);
             }
@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
             bindingDone.close.setOnClickListener(view -> dialog.cancel());
             bindingDone.toArticle.setOnClickListener(view -> {
                         dialog.cancel();
-                        broadcast(result, getView());
+                        translation(result, getView());
                     });
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
         else Log.e("showDialog","Command error");
     }
 
-    public static void broadcast(String namePlant, View view){
+    public static void translation(String namePlant, View view){
         Bundle bundle = new Bundle();
         bundle.putString("Plant", namePlant);
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment,bundle);

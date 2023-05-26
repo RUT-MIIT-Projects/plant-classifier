@@ -62,14 +62,14 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         infoList = new ArrayList<>();
-        initInfo(getContext(), dataModel.getUser(getContext()));
+        initInfo(getContext(), dataModel.getUser());
 
         binding.editUsername.setVisibility(View.INVISIBLE);
         binding.done.setVisibility(View.INVISIBLE);
 
-        binding.userImage.setImageBitmap(dataModel.getAvatar(getContext()));
+        binding.userImage.setImageBitmap(dataModel.getAvatar());
 
-        User user = dataModel.getUser(getContext());
+        User user = dataModel.getUser();
         binding.username.setText(String.valueOf(user.getUsername()));
 
 
@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment {
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
                     binding.userImage.setImageURI(selectedImage);
-                    dataModel.saveAvatar(getContext(), bitmap);
+                    dataModel.saveAvatar(bitmap);
                 } catch (IOException e) {
                     Log.e("Profile.startGallery", "Failed to import image from gallery");
                 }
@@ -136,7 +136,7 @@ public class ProfileFragment extends Fragment {
         binding.username.setVisibility(View.VISIBLE);
 
         user.setUsername(newUsername);
-        dataModel.saveUser(context);
+        dataModel.saveUser();
 
         hideKeyboard(context,view);
     }
