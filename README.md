@@ -1,4 +1,4 @@
-# Plant-classifier
+# FLORIA
 
 ## Ссылки
 - [Документация](/docs/README.md)
