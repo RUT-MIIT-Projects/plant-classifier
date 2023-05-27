@@ -14,6 +14,7 @@
             android:id="@+id/action_homeFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/articlesFragment"
         android:name="com.plants.app.screens.ArticlesFragment"
@@ -23,6 +24,7 @@
             android:id="@+id/action_articlesFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.plants.app.screens.ProfileFragment"
@@ -38,4 +40,5 @@
             app:destination="@id/articlesFragment" />
         
     </fragment>
+
 </navigation>

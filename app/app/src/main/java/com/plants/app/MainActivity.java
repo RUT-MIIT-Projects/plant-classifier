@@ -31,10 +31,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationBar);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        bottomNavigationView.setOnItemReselectedListener(item -> {
-            navController.popBackStack(item.getItemId(), false);
-        });
-
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.articlesFragment, R.id.profileFragment).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
