@@ -21,11 +21,8 @@ public class JSONHelper {
 
         try(InputStream inputStream = context.getAssets().open(FILE_NAME_PLANTS);
             InputStreamReader streamReader = new InputStreamReader(inputStream)){
-            //InputStreamReader to Convert byte streams to character streams
 
-            Root root = gson.fromJson(streamReader, Root.class);
-
-            return root;
+            return gson.fromJson(streamReader, Root.class);
         }
         catch(IOException e){
             Log.e("JSONHelper", "ERROR: import JSON plants",e);
@@ -38,9 +35,7 @@ public class JSONHelper {
             InputStreamReader streamReader = new InputStreamReader(inputStream)){
 
             Gson gson = new Gson();
-            User user = gson.fromJson(streamReader, User.class);
-
-            return user;
+            return gson.fromJson(streamReader, User.class);
         }
         catch(IOException e){
             Log.e("JSONHelper", "ERROR: import JSON user",e);
