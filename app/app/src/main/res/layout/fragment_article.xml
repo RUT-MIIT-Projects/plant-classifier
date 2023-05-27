@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_above="@+id/bottomNavigationBar"
-    tools:context=".fragments.ArticleFragment">
+    tools:context=".screens.ArticleFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,8 +18,8 @@
             android:layout_height="250dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/orchid_example"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/name"/>
 
@@ -30,12 +30,12 @@
             android:fontFamily="@font/roboto_bold"
             android:textSize="20sp"
             android:text="@string/Orchid"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imagePlant"
             app:layout_constraintBottom_toTopOf="@id/Watering"/>
 
-        <!-- Watering -->
+
         <TextView
             android:id="@+id/Watering"
             style="@style/ArticleTextTitle"
@@ -48,12 +48,12 @@
             android:id="@+id/Watering_info"
             style="@style/ArticleText"
             android:text="@string/Watering_info"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Watering"
             app:layout_constraintBottom_toTopOf="@id/Insolation"/>
 
-        <!-- Insolation -->
+
         <TextView
             android:id="@+id/Insolation"
             style="@style/ArticleTextTitle"
@@ -66,12 +66,12 @@
             android:id="@+id/Insolation_info"
             style="@style/ArticleText"
             android:text="@string/Watering_info"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Insolation"
             app:layout_constraintBottom_toTopOf="@id/Pruning"/>
 
-        <!-- Pruning -->
+
         <TextView
             android:id="@+id/Pruning"
             style="@style/ArticleTextTitle"
@@ -84,12 +84,12 @@
             android:id="@+id/Pruning_info"
             style="@style/ArticleText"
             android:text="@string/Pruning_info"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Pruning"
             app:layout_constraintBottom_toTopOf="@id/Soil"/>
 
-        <!-- Soil -->
+
         <TextView
             android:id="@+id/Soil"
             style="@style/ArticleTextTitle"
@@ -102,12 +102,12 @@
             android:id="@+id/Soil_info"
             style="@style/ArticleText"
             android:text="@string/Soil_info"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Soil"
             app:layout_constraintBottom_toTopOf="@id/Pot_size"/>
 
-        <!-- Pot_size -->
+
         <TextView
             android:id="@+id/Pot_size"
             style="@style/ArticleTextTitle"
@@ -120,11 +120,11 @@
             android:id="@+id/Pot_size_info"
             style="@style/ArticleText"
             android:text="@string/Pot_size_info"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Pot_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="100dp"/>
+            android:layout_marginBottom="50dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
