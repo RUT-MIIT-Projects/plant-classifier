@@ -40,7 +40,7 @@ public class ReadAndWrite {
             return BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
         }
         catch (IOException e){
-            Log.e("loadAvatar", "Image not found" + e);
+            Log.e("loadAvatar", "Image not found");
         }
         return null;
     }
