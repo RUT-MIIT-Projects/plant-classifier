@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
             bindingDone.close.setOnClickListener(view -> dialog.cancel());
             bindingDone.toArticle.setOnClickListener(view -> {
                         dialog.cancel();
-                        translation(result, getView());
+                        transition(result, getView());
                     });
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -150,9 +150,9 @@ public class HomeFragment extends Fragment {
         else Log.e("showDialog","Command error");
     }
 
-    public static void translation(String namePlant, View view){
+    private void transition(String namePlant, View view){
         Bundle bundle = new Bundle();
         bundle.putString("Plant", namePlant);
-        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment,bundle);
+        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_articleFragment, bundle);
     }
 }

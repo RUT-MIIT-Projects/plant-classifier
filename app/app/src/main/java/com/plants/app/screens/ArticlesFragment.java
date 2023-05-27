@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.plants.app.DataModel;
-import com.plants.app.R;
 import com.plants.app.utils.ImageClassifier;
 import com.plants.app.buttons.Button;
 import com.plants.app.buttons.ButtonAdapter;
@@ -57,11 +55,5 @@ public class ArticlesFragment extends Fragment {
         binding.recyclerViewButtons.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerViewButtons.setHasFixedSize(true);
         binding.recyclerViewButtons.setAdapter(adapter);
-    }
-
-    public static void translation(String namePlant, View view){
-        Bundle bundle = new Bundle();
-        bundle.putString("Plant", namePlant);
-        Navigation.findNavController(view).navigate(R.id.action_articlesFragment_to_articleFragment,bundle);
     }
 }
