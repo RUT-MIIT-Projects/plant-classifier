@@ -33,7 +33,7 @@ public class ImageClassifier {
 
             for(int i = 0; i < IMAGE_SIZE; i++) {
                 for(int j = 0; j < IMAGE_SIZE; j++) {
-                    int pixelValue = intValues[pixel++]; //RGB together
+                    int pixelValue = intValues[pixel++];
                     byteBuffer.putFloat(((pixelValue >> 16) & 0xFF) * (1.f));
                     byteBuffer.putFloat(((pixelValue >> 8) & 0xFF) * (1.f));
                     byteBuffer.putFloat((pixelValue & 0xFF) * (1.f));

@@ -72,7 +72,6 @@ public class ProfileFragment extends Fragment {
         User user = dataModel.getUser();
         binding.username.setText(String.valueOf(user.getUsername()));
 
-
         binding.upload.setOnClickListener(viewCast -> openGallery.launch(new Intent(MediaStore.ACTION_PICK_IMAGES)));
         handlerButtonsRename(getContext(), user);
     }

@@ -15,9 +15,9 @@ import java.io.PrintWriter;
 public class JSONHelper {
     private static final String FILE_NAME_PLANTS = "data.json";
     private static final String FILE_NAME_USER = "user.json";
+    private static Gson gson = new Gson();
 
     public static Root importJsonPlants(Context context){
-        Gson gson = new Gson();
 
         try(InputStream inputStream = context.getAssets().open(FILE_NAME_PLANTS);
             InputStreamReader streamReader = new InputStreamReader(inputStream)){
@@ -34,7 +34,6 @@ public class JSONHelper {
         try(InputStream inputStream = context.openFileInput(FILE_NAME_USER);
             InputStreamReader streamReader = new InputStreamReader(inputStream)){
 
-            Gson gson = new Gson();
             return gson.fromJson(streamReader, User.class);
         }
         catch(IOException e){
@@ -45,7 +44,6 @@ public class JSONHelper {
     public static void saveJsonUser(Context context, User user){
 
         try(PrintWriter printWriter = new PrintWriter(context.openFileOutput(FILE_NAME_USER, Context.MODE_PRIVATE))){
-            Gson gson = new Gson();
             String jsonString = gson.toJson(user);
             printWriter.write(jsonString);
         }
