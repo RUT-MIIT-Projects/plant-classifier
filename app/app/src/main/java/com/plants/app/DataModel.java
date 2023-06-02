@@ -43,8 +43,9 @@ public class DataModel extends AndroidViewModel {
     }
 
     private void initAvatar(){
-        if (ReadAndWrite.loadAvatar(getApplication().getApplicationContext()) != null)
+        if (ReadAndWrite.loadAvatar(getApplication().getApplicationContext()) != null) {
             avatar = ReadAndWrite.loadAvatar(getApplication().getApplicationContext());
+        }
         else avatar = BitmapFactory.decodeResource(getApplication().getApplicationContext().getResources(), R.drawable.avatar);
     }
 

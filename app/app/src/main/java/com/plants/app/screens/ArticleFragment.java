@@ -57,6 +57,6 @@ public class ArticleFragment extends Fragment {
         binding.SoilInfo.setText(plant.getSoil());
         binding.PotSizeInfo.setText(plant.getPot_size());
 
-        binding.imagePlant.setImageBitmap(ReadAndWrite.importImage(getContext(),plant.getPicture()));
+        binding.imagePlant.setImageBitmap(ReadAndWrite.importImage(context, plant.getPicture()));
     }
 }
